@@ -37,9 +37,7 @@ void ConstBufferDemo::Update()
 		_translation.y -= 3.f * dt;
 	}
 
-	// SRT (현재 S,R은 Identity 상태에서 변화없음으로 잠깐 생략하자.)
-	_world = Matrix::CreateTranslation(_translation);
-
+	_world = Matrix::CreateTranslation(_translation); 
 
 }
 
