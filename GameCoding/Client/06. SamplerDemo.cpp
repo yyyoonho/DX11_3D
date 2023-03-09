@@ -11,9 +11,6 @@ void SamplerDemo::Init()
 
 	// Object
 	_geometry = make_shared<Geometry<VertexTextureData>>();
-	//GeometryHelper::CreateQuad(_geometry);
-	//GeometryHelper::CreateCube(_geometry);
-	//GeometryHelper::CreateSphere(_geometry);
 	GeometryHelper::CreateGrid(_geometry, 256, 256);
 
 	_vertexBuffer = make_shared<VertexBuffer>();

@@ -1,7 +1,6 @@
 #pragma once
 #include "IExecute.h"
 #include "Geometry.h"
-#include "GameObject.h"
 
 class CameraDemo : public IExecute
 {
