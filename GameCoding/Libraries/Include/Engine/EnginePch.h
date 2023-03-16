@@ -55,7 +55,6 @@ using namespace Microsoft::WRL;
 #include "ResourceManager.h"
 #include "RenderManager.h"
 
-
 // Engine
 #include "VertexData.h"
 #include "VertexBuffer.h"

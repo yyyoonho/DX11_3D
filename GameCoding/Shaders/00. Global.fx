@@ -34,8 +34,8 @@ struct VertexTexture
 
 struct VertexColor
 {
-	float4 position : POSITION;
-	float4 color : COLOR;
+	float4 Position : POSITION;
+	float4 Color : COLOR;
 };
 
 struct VertexTextureNormal
@@ -53,7 +53,7 @@ struct VertexOutput
 {
 	float4 position : SV_POSITION;
 	float2 uv : TEXCOORD;
-	float3 normal :NORMAL;
+	float3 normal : NORMAL;
 };
 
 struct MeshOutput
@@ -61,7 +61,7 @@ struct MeshOutput
 	float4 position : SV_POSITION;
 	float3 worldPosition : POSITION1;
 	float2 uv : TEXCOORD;
-	float3 normal :NORMAL;
+	float3 normal : NORMAL;
 };
 
 //////////////////
@@ -106,7 +106,10 @@ pass name											\
 // Function //
 //////////////
 
-
+float3 CameraPosition()
+{
+	return -V._41_42_43;
+}
 
 #endif
 

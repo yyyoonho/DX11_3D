@@ -5,9 +5,9 @@ float4 MaterialEmissive;
 MeshOutput VS(VertexTextureNormal input)
 {
 	MeshOutput output;
-	output.position = mul(input.position,W);
+	output.position = mul(input.position, W);
 	output.worldPosition = input.position;
-	output.position = mul(output.position,VP);
+	output.position = mul(output.position, VP);
 	output.uv = input.uv;
 	output.normal = mul(input.normal, (float3x3)W);
 
@@ -30,7 +30,6 @@ float4 PS(MeshOutput input) : SV_TARGET
 	emissive = pow(emissive, 2);
 
 	float4 color = MaterialEmissive * emissive;
-
 
 	return color;
 }
