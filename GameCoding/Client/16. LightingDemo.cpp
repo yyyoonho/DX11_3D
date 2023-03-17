@@ -60,7 +60,7 @@ void LightingDemo::Update()
 
 	{
 		LightDesc lightDesc;
-		lightDesc.ambient = Vec4(0.5f);
+		lightDesc.ambient = Vec4(1.0f);
 		lightDesc.diffuse = Vec4(1.f);
 		lightDesc.specular = Vec4(1.f, 1.f, 1.f, 1.f);
 		lightDesc.direction = Vec3(0.f, -1.f, 0.f);
@@ -80,9 +80,9 @@ void LightingDemo::Update()
 
 	{
 		MaterialDesc desc;
-		desc.ambient = Vec4(0.5f);
+		desc.ambient = Vec4(0.2f);
 		desc.diffuse = Vec4(1.f);
-		//desc.specular = Color(0.5f, 0.5f, 0.5f, 1.f);
+		desc.specular = Color(0.5f, 0.5f, 0.5f, 1.f);
 		//desc.emissive = Color(1.f, 0.f, 0.f, 1.f);
 
 		RENDER->PushMaterialData(desc);
