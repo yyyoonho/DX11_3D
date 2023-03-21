@@ -31,6 +31,9 @@
     <Filter Include="00. Engine\Resource">
       <UniqueIdentifier>{7380316a-f64a-4b82-81fe-58b5e432dd5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Engine\Resource\Model">
+      <UniqueIdentifier>{50589ee2-d841-462e-84e0-275df1bbfbcf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -124,6 +127,18 @@
       <Filter>00. Engine\Resource</Filter>
     </ClCompile>
     <ClCompile Include="Frustum.cpp">
+      <Filter>04. Component</Filter>
+    </ClCompile>
+    <ClCompile Include="FileUtils.cpp">
+      <Filter>98. Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>00. Engine\Resource\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelMesh.cpp">
+      <Filter>00. Engine\Resource\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelRenderer.cpp">
       <Filter>04. Component</Filter>
     </ClCompile>
   </ItemGroup>
@@ -228,6 +243,18 @@
       <Filter>00. Engine\Resource</Filter>
     </ClInclude>
     <ClInclude Include="Frustum.h">
+      <Filter>04. Component</Filter>
+    </ClInclude>
+    <ClInclude Include="FileUtils.h">
+      <Filter>98. Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>00. Engine\Resource\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelMesh.h">
+      <Filter>00. Engine\Resource\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelRenderer.h">
       <Filter>04. Component</Filter>
     </ClInclude>
   </ItemGroup>
