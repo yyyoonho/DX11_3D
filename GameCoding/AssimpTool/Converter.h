@@ -14,7 +14,7 @@ public:
 
 private:
 	void ReadModelData(aiNode* node, int32 index, int32 parent);
-	void ReadMeshData(aiNode* nodex, int32 bone);
+	void ReadMeshData(aiNode* node, int32 bone);
 	void WriteModelFile(wstring finalPath);
 
 private:

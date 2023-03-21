@@ -48,12 +48,85 @@ void Converter::ExportMaterialData(wstring savePath)
 
 void Converter::ReadModelData(aiNode* node, int32 index, int32 parent)
 {
+	shared_ptr<asBone> bone = make_shared<asBone>();
 
+	bone->index = index;
+	bone->parnet = parent;
+	bone->name = node->mName.C_Str();
+
+	// 직속 상관을 기준으로한 Transform (Relative Transform)
+	Matrix transform(node->mTransformation[0]); // 주소를 넣으면 전체 값이 복사가 될 수 있도록 오버로딩되어있다.
+	bone->transform = transform.Transpose();
+
+	// Root 까지 가는 행렬
+	Matrix matParent = Matrix::Identity;
+	if (parent >= 0)
+		matParent = _bones[parent]->transform;
+
+	// Root를 기준으로한 Transform (Local Transform)
+	bone->transform = bone->transform * matParent;
+
+	_bones.push_back(bone);
+
+	// Mesh
+	ReadMeshData(node, index);
+
+	// 재귀함수
+	for (uint32 i = 0; i < node->mNumChildren; i++)
+		ReadModelData(node->mChildren[i], _bones.size(), index);
 }
 
-void Converter::ReadMeshData(aiNode* nodex, int32 bone)
+void Converter::ReadMeshData(aiNode* node, int32 bone)
 {
+	if (node->mNumMeshes < 1)
+		return;
 
+	shared_ptr<asMesh> mesh = make_shared<asMesh>();
+	mesh->name = node->mName.C_Str();
+	mesh->boneIndex = bone;
+
+	for (uint32 i = 0; i < node->mNumMeshes; i++)
+	{
+		uint32 index = node->mMeshes[i]; 
+		// 노드에서 꺼낸 Mesh는 Mesh그 자체가 아니라 index다.
+		// 꺼낸 index로 Scene에 요청하면 그제서야 mesh를 반환해준다.
+		const aiMesh* srcMesh = _scene->mMeshes[index];
+
+		// Material Name
+		const aiMaterial* material = _scene->mMaterials[srcMesh->mMaterialIndex];
+		mesh->materialName = material->GetName().C_Str();
+
+		const uint32 startVertex = mesh->vertices.size();
+
+		for (uint32 v = 0; v < srcMesh->mNumVertices; v++)
+		{
+			// Vertex
+			VertexType vertex;
+			::memcpy(&vertex.position, &srcMesh->mVertices[v], sizeof(Vec3));
+
+			// UV
+			if (srcMesh->HasTextureCoords(0))
+				::memcpy(&vertex.uv, &srcMesh->mTextureCoords[0][v], sizeof(Vec2));
+
+			// Normal
+			if (srcMesh->HasNormals())
+				::memcpy(&vertex.normal, &srcMesh->mNormals[v], sizeof(Vec3));
+
+			mesh->vertices.push_back(vertex);
+		} 
+
+		// Index
+		for (uint32 f = 0; f < srcMesh->mNumFaces; f++)
+		{
+			aiFace& face = srcMesh->mFaces[f];
+
+			for (uint32 k = 0; k < face.mNumIndices; k++)
+				mesh->indices.push_back(face.mIndices[k] + startVertex);
+		}
+	}
+
+	_meshes.push_back(mesh);
+	
 }
 
 void Converter::WriteModelFile(wstring finalPath)
@@ -180,5 +253,58 @@ void Converter::WriteMaterialData(wstring finalPath)
 
 string Converter::WriteTexture(string saveFolder, string file)
 {
-	return "";
+	string fileName = filesystem::path(file).filename().string();
+	string folderName = filesystem::path(saveFolder).filename().string();
+
+	const aiTexture* srcTexture = _scene->GetEmbeddedTexture(file.c_str());
+	if (srcTexture)
+	{
+		string pathStr = saveFolder + fileName;
+
+		if (srcTexture->mHeight == 0)
+		{
+			//shared_ptr<FileUtils> file = make_shared<FileUtils>();
+			//file->Open(Utils::ToWString(pathStr), FileMode::Write);
+			//file->Write(srcTexture->pcData, srcTexture->mWidth);
+		}
+		else
+		{
+			D3D11_TEXTURE2D_DESC desc;
+			ZeroMemory(&desc, sizeof(D3D11_TEXTURE2D_DESC));
+			desc.Width = srcTexture->mWidth;
+			desc.Height = srcTexture->mHeight;
+			desc.MipLevels = 1;
+			desc.ArraySize = 1;
+			desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+			desc.SampleDesc.Count = 1;
+			desc.SampleDesc.Quality = 0;
+			desc.Usage = D3D11_USAGE_IMMUTABLE;
+
+			D3D11_SUBRESOURCE_DATA subResource = { 0 };
+			subResource.pSysMem = srcTexture->pcData;
+
+			ComPtr<ID3D11Texture2D> texture;
+			HRESULT hr = DEVICE->CreateTexture2D(&desc, &subResource, texture.GetAddressOf());
+			CHECK(hr);
+
+			DirectX::ScratchImage img;
+			::CaptureTexture(DEVICE.Get(), DC.Get(), texture.Get(), img);
+
+			// Save To File
+			hr = DirectX::SaveToDDSFile(*img.GetImages(), DirectX::DDS_FLAGS_NONE, Utils::ToWString(fileName).c_str());
+			CHECK(hr);
+		}
+	}
+	else
+	{
+		string originStr = (filesystem::path(_assetPath) / folderName / file).string();
+		Utils::Replace(originStr, "\\", "/");
+
+		string pathStr = (filesystem::path(saveFolder) / fileName).string();
+		Utils::Replace(pathStr, "\\", "/");
+
+		::CopyFileA(originStr.c_str(), pathStr.c_str(), false);
+	}
+
+	return fileName;
 }
