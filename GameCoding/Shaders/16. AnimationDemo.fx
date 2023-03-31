@@ -13,7 +13,6 @@ struct KeyframeDesc
 	float sumTime;
 	float speed;
 	float padding;
-
 };
 
 cbuffer KeyframeBuffer
