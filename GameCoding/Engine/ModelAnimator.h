@@ -3,6 +3,15 @@
 
 class Model;
 
+struct AnimTransform
+{
+	// [ ][ ][ ][ ][ ][ ][ ][ ]... 250개의 관절정보
+	using TransformArrayType = array<Matrix, MAX_MODEL_TRANSFORMS>;
+
+	// [ ][ ][ ][ ][ ][ ][ ][ ]... 500개
+	array<TransformArrayType, MAX_MODEL_KEYFRAMES> transforms;
+};
+
 class ModelAnimator : public Component
 {
 	using Super = Component;
@@ -17,7 +26,16 @@ public:
 	void SetPass(uint8 pass) { _pass = pass; }
 
 private:
+	void CreateTexture();
+	void CreateAnimationTransform(uint32 index);
 
+private:
+	vector<AnimTransform> _animTransforms;
+	ComPtr<ID3D11Texture2D> _texture;
+	ComPtr<ID3D11ShaderResourceView> _srv;
+
+private:
+	KeyframeDesc _keyframeDesc;
 
 private:
 	shared_ptr<Shader>	_shader;

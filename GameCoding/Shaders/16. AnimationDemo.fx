@@ -1,7 +1,25 @@
 #include "00. Global.fx"
 #include "00. Light.fx"
 
-#define MAX_MODEL_TRANSFORMS 50
+#define MAX_MODEL_TRANSFORMS 250
+#define MAX_MODEL_KEYFRAMES 500
+
+struct KeyframeDesc
+{
+	int animIndex;
+	uint currFrame;
+	uint nextFrame;
+	float ratio;
+	float sumTime;
+	float speed;
+	float padding;
+
+};
+
+cbuffer KeyframeBuffer
+{
+	KeyframeDesc Keyframes;
+};
 
 cbuffer BoneBuffer
 {
@@ -9,14 +27,49 @@ cbuffer BoneBuffer
 };
 
 uint BoneIndex;
+Texture2DArray TransformMap;
+
+matrix GetAnimationMatrix(VertexTextureNormalTangentBlend input)
+{
+	float indices[4] = { input.blendIndices.x, input.blendIndices.y, input.blendIndices.z, input.blendIndices.w };
+	float weights[4] = { input.blendWeights.x, input.blendWeights.y, input.blendWeights.z, input.blendWeights.w };
+
+	int animIndex = Keyframes.animIndex;
+	int currFrame = Keyframes.currFrame;
+
+	float4 c0, c1, c2, c3;
+	matrix curr = 0;
+	matrix transform = 0;
+	
+	for (int i = 0; i < 4; i++)
+	{
+		c0 = TransformMap.Load(int4(indices[i] * 4 + 0, currFrame, animIndex, 0));
+		c1 = TransformMap.Load(int4(indices[i] * 4 + 1, currFrame, animIndex, 0));
+		c2 = TransformMap.Load(int4(indices[i] * 4 + 2, currFrame, animIndex, 0));
+		c3 = TransformMap.Load(int4(indices[i] * 4 + 3, currFrame, animIndex, 0));
+	
+		curr = matrix(c0, c1, c2, c3);
+		transform += mul(weights[i], curr);
+	}
+	
+	return transform;
+
+}
 
 MeshOutput VS(VertexTextureNormalTangentBlend input)
 {
 	MeshOutput output;
 
-	// TODO
+	// 입력에 따라 원래 있던 T포즈 global에서 어떤 특정 Relative(Local)로 갔다가, 
+	// 그 bone에 해당하는 새로운 애니메이션의 Global로 가는 행렬
+	// (정리)
+	// 1. 애니메이션은 뼈를 움직인다.
+	// 2. 뼈가 움직이면 뼈에 영향을 받는 Vertex들도 같이 움직인다.
+	// 3. m행렬은 각각의 Vertex가 애니메이션 연산(즉, 뼈의 이동)에 따른 영향을 계산해주는 행렬이다.
+	// => 애니메이션 적용!
+	matrix m = GetAnimationMatrix(input);
 
-	output.position = mul(input.position, BoneTransforms[BoneIndex]);
+	output.position = mul(input.position, m); // 즉, 애니메이션의 글로벌로 가는 m
 	output.position = mul(output.position, W);
 	output.worldPosition = output.position.xyz;
 	output.position = mul(output.position, VP);

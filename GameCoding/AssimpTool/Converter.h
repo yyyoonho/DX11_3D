@@ -11,6 +11,7 @@ public:
 	void ReadAssetFile(wstring file);
 	void ExportModelData(wstring savePath);
 	void ExportMaterialData(wstring savePath);
+	void ExportAnimationData(wstring savePath, uint32 index=0);
 
 private:
 	void ReadModelData(aiNode* node, int32 index, int32 parent);
@@ -24,8 +25,14 @@ private:
 	string WriteTexture(string saveFolder, string file);
 
 private:
-	uint32 GetBoneIndex(const string& name);
+	shared_ptr<asAnimation> ReadAnimationData(aiAnimation* srcAnimation);
+	shared_ptr<asAnimationNode> ParseAnimationNode(shared_ptr<asAnimation> animation, aiNodeAnim* srcNode);
+	void ReadKeyframeData(shared_ptr<asAnimation> animation, aiNode* srcNode, map<string, shared_ptr<asAnimationNode>>& cache);
+	void WriteAnimationData(shared_ptr<asAnimation> animation, wstring finalPath);
 
+
+private:
+	uint32 GetBoneIndex(const string& name);
 
 private:
 	wstring _assetPath = L"../Resources/Assets/";
