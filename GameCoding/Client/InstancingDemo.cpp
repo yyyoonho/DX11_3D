@@ -100,7 +100,7 @@ void InstancingDemo::Update()
 	_instanceBuffer->PushData();
 	_mesh->GetIndexBuffer()->PushData();
 
-	//shader->DrawIndexed(0, 0, _mesh->GetIndexBuffer()->GetCount(), 0, 0);
+	//_shader->DrawIndexed(0, 0, _mesh->GetIndexBuffer()->GetCount(), 0, 0);
 	_shader->DrawIndexedInstanced(0, 0, _mesh->GetIndexBuffer()->GetCount(), _objs.size());
 }
 
