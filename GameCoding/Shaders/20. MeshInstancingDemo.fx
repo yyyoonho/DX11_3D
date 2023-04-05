@@ -8,7 +8,7 @@ struct VS_IN
 	float3 normal : NORMAL;
 	float3 tangent : TANGENT;
 	// INSTANCING
-	uint instanceID : SV_INSTANCED;
+	uint instanceID : SV_INSTANCEID;
 	matrix world : INST;
 };
 
