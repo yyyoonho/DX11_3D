@@ -79,6 +79,7 @@ void RenderDemo::Init()
 		desc.specular = Vec4(1.f);
 		RESOURCES->Add(L"Veigar", material);
 	}
+
 	for (int32 i = 0; i < 100; i++)
 	{
 		auto obj = make_shared<GameObject>();
@@ -95,6 +96,7 @@ void RenderDemo::Init()
 
 		_objs.push_back(obj);
 	}
+
 
 	RENDER->Init(_shader);
 }
@@ -113,9 +115,11 @@ void RenderDemo::Update()
 		RENDER->PushLightData(lightDesc);
 	}
 
+	// INSTANCING
 	INSTANCING->Render(_objs);
 }
 
 void RenderDemo::Render()
 {
+
 }

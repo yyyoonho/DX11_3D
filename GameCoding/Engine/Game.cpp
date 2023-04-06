@@ -20,7 +20,8 @@ WPARAM Game::Run(GameDesc& desc)
 	TIME->Init();
 	INPUT->Init(_desc.hWnd);
 	GUI->Init();
-	
+	RESOURCES->Init();
+
 	_desc.app->Init();
 
 	MSG msg = { 0 };
@@ -106,8 +107,9 @@ void Game::Update()
 
 	GRAPHICS->RenderBegin();
 
-	GUI->Update();
+	SCENE->Update();
 
+	GUI->Update();
 	_desc.app->Update();
 	_desc.app->Render();
 	GUI->Render();
