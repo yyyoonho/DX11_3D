@@ -31,6 +31,9 @@
     <Filter Include="Game\Week3">
       <UniqueIdentifier>{897349ee-2028-488b-a19a-7d9e5f6b7fe1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\Week4">
+      <UniqueIdentifier>{1032f287-b1bc-40e4-b356-f0dee61150c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -42,22 +45,10 @@
     <ClCompile Include="CameraScript.cpp">
       <Filter>Main\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="InstancingDemo.cpp">
-      <Filter>Game\Week3</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshInstancingDemo.cpp">
-      <Filter>Game\Week3</Filter>
-    </ClCompile>
-    <ClCompile Include="ModelInstancingDemo.cpp">
-      <Filter>Game\Week3</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimInstancingDemo.cpp">
-      <Filter>Game\Week3</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderDemo.cpp">
-      <Filter>Game\Week3</Filter>
-    </ClCompile>
     <ClCompile Include="SceneDemo.cpp">
+      <Filter>Game\Week3</Filter>
+    </ClCompile>
+    <ClCompile Include="RawBufferDemo.cpp">
       <Filter>Game\Week3</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,22 +62,10 @@
     <ClInclude Include="CameraScript.h">
       <Filter>Main\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="InstancingDemo.h">
-      <Filter>Game\Week3</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshInstancingDemo.h">
-      <Filter>Game\Week3</Filter>
-    </ClInclude>
-    <ClInclude Include="ModelInstancingDemo.h">
-      <Filter>Game\Week3</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimInstancingDemo.h">
-      <Filter>Game\Week3</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderDemo.h">
-      <Filter>Game\Week3</Filter>
-    </ClInclude>
     <ClInclude Include="SceneDemo.h">
+      <Filter>Game\Week3</Filter>
+    </ClInclude>
+    <ClInclude Include="RawBufferDemo.h">
       <Filter>Game\Week3</Filter>
     </ClInclude>
   </ItemGroup>
@@ -168,6 +147,9 @@
     </FxCompile>
     <FxCompile Include="..\Shaders\00. Render.fx">
       <Filter>Shaders\Common</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Shaders\24. RawBufferDemo.fx">
+      <Filter>Shaders\Week4</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

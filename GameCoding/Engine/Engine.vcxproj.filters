@@ -37,6 +37,12 @@
     <Filter Include="98. Utils\ImGUI">
       <UniqueIdentifier>{9f28f88c-292c-4613-8214-24f19c79312a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05.ComputeShader">
+      <UniqueIdentifier>{c58bf4b7-8cfc-49bb-8eb7-c544cd0f9818}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ComputeShader\Buffer">
+      <UniqueIdentifier>{cd42e220-98b6-4fdf-8477-24f1a141b82f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -188,6 +194,9 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>02. Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="RawBuffer.cpp">
+      <Filter>05.ComputeShader\Buffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +361,9 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>02. Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="RawBuffer.h">
+      <Filter>05.ComputeShader\Buffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
