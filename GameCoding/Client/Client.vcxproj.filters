@@ -54,6 +54,9 @@
     <ClCompile Include="GroupDemo.cpp">
       <Filter>Game\Week3</Filter>
     </ClCompile>
+    <ClCompile Include="TextureBufferDemo.cpp">
+      <Filter>Game\Week3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -72,6 +75,9 @@
       <Filter>Game\Week3</Filter>
     </ClInclude>
     <ClInclude Include="GroupDemo.h">
+      <Filter>Game\Week3</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureBufferDemo.h">
       <Filter>Game\Week3</Filter>
     </ClInclude>
   </ItemGroup>
@@ -158,6 +164,9 @@
       <Filter>Shaders\Week4</Filter>
     </FxCompile>
     <FxCompile Include="..\Shaders\25. GroupDemo.fx">
+      <Filter>Shaders\Week4</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Shaders\26. TextureBufferDemo.fx">
       <Filter>Shaders\Week4</Filter>
     </FxCompile>
   </ItemGroup>
