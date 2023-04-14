@@ -131,7 +131,7 @@ void InstancingManager::RenderAnimRenderer(vector<shared_ptr<GameObject>>& gameO
 				tweenDesc->tweens[i] = desc;
 			}
 
-			RENDER->PushTweenData(*tweenDesc.get());
+			vec[0]->GetModelAnimator()->GetShader()->PushTweenData(*tweenDesc.get());
 
 			//¸·Å¸
 			shared_ptr<InstancingBuffer>& buffer = _buffers[instanceId];
