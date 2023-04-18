@@ -13,9 +13,6 @@
     <Filter Include="Main\Camera">
       <UniqueIdentifier>{59583bfb-afc5-49c1-bea5-7bdf96ee715c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Week2">
-      <UniqueIdentifier>{e1a3c9cd-3a8c-4321-ad12-6e96942f1c79}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shaders\Week2">
       <UniqueIdentifier>{85d4b296-3eae-4a92-b736-fc5d15acf693}</UniqueIdentifier>
     </Filter>
@@ -45,23 +42,26 @@
     <ClCompile Include="CameraScript.cpp">
       <Filter>Main\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="SceneDemo.cpp">
-      <Filter>Game\Week3</Filter>
-    </ClCompile>
-    <ClCompile Include="RawBufferDemo.cpp">
+    <ClCompile Include="CollisionDemo.cpp">
       <Filter>Game\Week3</Filter>
     </ClCompile>
     <ClCompile Include="GroupDemo.cpp">
-      <Filter>Game\Week3</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="TextureBufferDemo.cpp">
-      <Filter>Game\Week3</Filter>
+    <ClCompile Include="RawBufferDemo.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneDemo.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="StructuredBufferDemo.cpp">
-      <Filter>Game\Week3</Filter>
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureBufferDemo.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="ViewportDemo.cpp">
-      <Filter>Game\Week3</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -74,23 +74,26 @@
     <ClInclude Include="CameraScript.h">
       <Filter>Main\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="SceneDemo.h">
-      <Filter>Game\Week3</Filter>
-    </ClInclude>
-    <ClInclude Include="RawBufferDemo.h">
+    <ClInclude Include="CollisionDemo.h">
       <Filter>Game\Week3</Filter>
     </ClInclude>
     <ClInclude Include="GroupDemo.h">
-      <Filter>Game\Week3</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="TextureBufferDemo.h">
-      <Filter>Game\Week3</Filter>
+    <ClInclude Include="RawBufferDemo.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneDemo.h">
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="StructuredBufferDemo.h">
-      <Filter>Game\Week3</Filter>
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureBufferDemo.h">
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="ViewportDemo.h">
-      <Filter>Game\Week3</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
