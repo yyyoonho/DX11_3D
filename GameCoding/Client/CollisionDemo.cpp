@@ -22,9 +22,12 @@
 #include "Graphics.h"
 #include "SphereCollider.h"
 #include "Scene.h"
+#include "AABBBoxCollider.h"
+#include "OBBBoxCollider.h"
 
 void CollisionDemo::Init()
-{	_shader = make_shared<Shader>(L"23. RenderDemo.fx");
+{
+	_shader = make_shared<Shader>(L"23. RenderDemo.fx");
 
 	// Camera
 	{
@@ -48,14 +51,12 @@ void CollisionDemo::Init()
 		CUR_SCENE->Add(light);
 	}
 
-	
+	// Material
 	{
 		shared_ptr<Material> material = make_shared<Material>();
 		material->SetShader(_shader);
-
 		auto texture = RESOURCES->Load<Texture>(L"Veigar", L"..\\Resources\\Textures\\veigar.jpg");
 		material->SetDiffuseMap(texture);
-
 		MaterialDesc& desc = material->GetMaterialDesc();
 		desc.ambient = Vec4(1.f);
 		desc.diffuse = Vec4(1.f);
@@ -63,10 +64,65 @@ void CollisionDemo::Init()
 		RESOURCES->Add(L"Veigar", material);
 	}
 
+	{
+		auto obj = make_shared<GameObject>();
+		obj->GetOrAddTransform()->SetLocalPosition(Vec3(0.f));
+		obj->AddComponent(make_shared<MeshRenderer>());
+		{
+			auto mesh = make_shared<Mesh>();
+			mesh->CreateGrid(10, 10);
+			obj->GetMeshRenderer()->SetMesh(mesh);
+			obj->GetMeshRenderer()->SetPass(0);
+		}
+		{
+			obj->GetMeshRenderer()->SetMaterial(RESOURCES->Get<Material>(L"Veigar"));
+		}
+		CUR_SCENE->Add(obj);
+	}
+
 	// Mesh
 	{
 		auto obj = make_shared<GameObject>();
 		obj->GetOrAddTransform()->SetLocalPosition(Vec3(0.f));
+		obj->AddComponent(make_shared<MeshRenderer>());
+		{
+			obj->GetMeshRenderer()->SetMaterial(RESOURCES->Get<Material>(L"Veigar"));
+		}
+		/*{
+			auto mesh = RESOURCES->Get<Mesh>(L"Sphere");
+			obj->GetMeshRenderer()->SetMesh(mesh);
+			obj->GetMeshRenderer()->SetPass(0);
+		}*/
+		/*{
+			auto collider = make_shared<SphereCollider>();
+			collider->SetRadius(0.5f);
+			obj->AddComponent(collider);
+		}*/
+		{
+			auto mesh = RESOURCES->Get<Mesh>(L"Cube");
+			obj->GetMeshRenderer()->SetMesh(mesh);
+			obj->GetMeshRenderer()->SetPass(0);
+		}
+		{
+			auto collider = make_shared<AABBBoxCollider>();
+			collider->GetBoundingBox().Extents = Vec3(0.5f);
+			obj->AddComponent(collider);
+		}
+		/*{
+			obj->GetOrAddTransform()->SetRotation(Vec3(0, 45, 0));
+
+			auto collider = make_shared<OBBBoxCollider>();
+			collider->GetBoundingBox().Extents = Vec3(0.5f);
+			collider->GetBoundingBox().Orientation = Quaternion::CreateFromYawPitchRoll(45, 0, 0);
+			obj->AddComponent(collider);
+		}*/
+
+		CUR_SCENE->Add(obj);
+	}
+
+	{
+		auto obj = make_shared<GameObject>();
+		obj->GetOrAddTransform()->SetLocalPosition(Vec3(3.f, 0.f, 0.f));
 		obj->AddComponent(make_shared<MeshRenderer>());
 		{
 			obj->GetMeshRenderer()->SetMaterial(RESOURCES->Get<Material>(L"Veigar"));
@@ -81,11 +137,14 @@ void CollisionDemo::Init()
 			collider->SetRadius(0.5f);
 			obj->AddComponent(collider);
 		}
+		{
+			obj->AddComponent(make_shared<MoveScript>());
+		}
 
 		CUR_SCENE->Add(obj);
 	}
 }
-  
+
 void CollisionDemo::Update()
 {
 	if (INPUT->GetButtonDown(KEY_TYPE::LBUTTON))
@@ -105,4 +164,11 @@ void CollisionDemo::Update()
 void CollisionDemo::Render()
 {
 
+}
+
+void MoveScript::Update()
+{
+	auto pos = GetTransform()->GetPosition();
+	pos.x -= DT * 1.0f;
+	GetTransform()->SetPosition(pos);
 }

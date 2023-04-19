@@ -37,6 +37,8 @@ void Scene::LateUpdate()
 	{
 		object->LateUpdate();
 	}
+
+	CheckCollision();
 }
 
 void Scene::Add(shared_ptr<GameObject> object)
@@ -63,12 +65,14 @@ void Scene::Remove(shared_ptr<GameObject> object)
 	_lights.erase(object);
 }
 
-shared_ptr<class GameObject> Scene::Pick(int32 screenX, int32 screenY)
+std::shared_ptr<class GameObject> Scene::Pick(int32 screenX, int32 screenY)
 {
 	shared_ptr<Camera> camera = GetCamera()->GetCamera();
 
 	float width = GRAPHICS->GetViewport().GetWidth();
 	float height = GRAPHICS->GetViewport().GetHeight();
+	//float width = static_cast<float>(GAME->GetGameDesc().width);
+	//float height = static_cast<float>(GAME->GetGameDesc().height);
 
 	Matrix projectionMatrix = camera->GetProjectionMatrix();
 
@@ -89,7 +93,7 @@ shared_ptr<class GameObject> Scene::Pick(int32 screenX, int32 screenY)
 			continue;
 
 		// ViewSpace에서의 Ray 정의
-		Vec4 rayOrigin = Vec4(0.f, 0.f, 0.f, 1.f);
+		Vec4 rayOrigin = Vec4(0.0f, 0.0f, 0.0f, 1.0f);
 		Vec4 rayDir = Vec4(viewX, viewY, 1.0f, 0.0f);
 
 		// WorldSpace에서의 Ray 정의
@@ -112,4 +116,30 @@ shared_ptr<class GameObject> Scene::Pick(int32 screenX, int32 screenY)
 	}
 
 	return picked;
+}
+
+void Scene::CheckCollision()
+{
+	vector<shared_ptr<BaseCollider>> colliders;
+
+	for (shared_ptr<GameObject> object : _objects)
+	{
+		if (object->GetCollider() == nullptr)
+			continue;
+
+		colliders.push_back(object->GetCollider());
+	}
+
+	// BruteForce
+	for (int32 i = 0; i < colliders.size(); i++)
+	{
+		for (int32 j = i + 1; j < colliders.size(); j++)
+		{
+			shared_ptr<BaseCollider>& other = colliders[j];
+			if (colliders[i]->Intersects(other))
+			{
+				int a = 3;
+			}
+		}
+	}
 }
