@@ -46,6 +46,9 @@
     <Filter Include="04. Component\Collision">
       <UniqueIdentifier>{47efde58-9312-413a-80a2-216b74f7df8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="99. Headers\Math">
+      <UniqueIdentifier>{b20010fe-e3dc-4f4d-9429-9168de26b1e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -237,6 +240,9 @@
     <ClInclude Include="Terrain.h">
       <Filter>04. Component</Filter>
     </ClInclude>
+    <ClInclude Include="Primitive3D.h">
+      <Filter>99. Headers\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -415,6 +421,9 @@
     </ClCompile>
     <ClCompile Include="Terrain.cpp">
       <Filter>04. Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Primitive3D.cpp">
+      <Filter>99. Headers\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
