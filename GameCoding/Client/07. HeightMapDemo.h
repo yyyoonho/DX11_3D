@@ -23,3 +23,4 @@ public:
 	shared_ptr<Texture> _heightMap;
 	shared_ptr<Texture> _texture;
 };
+

@@ -26,7 +26,7 @@ private:
 	BOOL InitInstance(int cmdShow);
 
 	void Update();
-	void ShowFPS();
+	void ShowFps();
 
 	static LRESULT CALLBACK WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam);
 	

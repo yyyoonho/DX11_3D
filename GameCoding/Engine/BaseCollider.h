@@ -22,3 +22,4 @@ public:
 protected:
 	ColliderType _colliderType;
 };
+

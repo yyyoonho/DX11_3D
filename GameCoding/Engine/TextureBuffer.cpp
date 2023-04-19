@@ -31,7 +31,7 @@ void TextureBuffer::CreateInput(ComPtr<ID3D11Texture2D> src)
 	_format = srcDesc.Format;
 
 	D3D11_TEXTURE2D_DESC desc;
-	ZeroMemory(&desc, sizeof(desc)); 
+	ZeroMemory(&desc, sizeof(desc));
 	desc.Width = _width;
 	desc.Height = _height;
 	desc.ArraySize = _arraySize;

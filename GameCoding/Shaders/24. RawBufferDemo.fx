@@ -1,4 +1,5 @@
 
+
 RWByteAddressBuffer Output; // UAV
 
 struct ComputeInput
@@ -9,7 +10,7 @@ struct ComputeInput
 	uint groupIndex : SV_GroupIndex;
 };
 
-[numthreads(10,8,3)]
+[numthreads(10, 8, 3)]
 void CS(ComputeInput input)
 {
 	uint index = input.groupIndex;

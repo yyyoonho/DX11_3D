@@ -1,7 +1,7 @@
 #pragma once
 #include "IExecute.h"
 
-class TextureBufferDemo: public IExecute
+class TextureBufferDemo : public IExecute
 {
 public:
 	void Init() override;
@@ -10,6 +10,7 @@ public:
 
 private:
 	shared_ptr<Shader> _shader;
+
 private:
 	ComPtr<ID3D11ShaderResourceView> MakeComputeShaderTexture();
 };

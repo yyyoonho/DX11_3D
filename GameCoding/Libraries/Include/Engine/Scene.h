@@ -26,3 +26,4 @@ private:
 	// Cache Light
 	unordered_set<shared_ptr<GameObject>> _lights;
 };
+

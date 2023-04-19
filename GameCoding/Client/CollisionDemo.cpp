@@ -24,6 +24,7 @@
 #include "Scene.h"
 #include "AABBBoxCollider.h"
 #include "OBBBoxCollider.h"
+#include "Terrain.h"
 
 void CollisionDemo::Init()
 {
@@ -64,21 +65,29 @@ void CollisionDemo::Init()
 		RESOURCES->Add(L"Veigar", material);
 	}
 
+	// Terrain
 	{
 		auto obj = make_shared<GameObject>();
-		obj->GetOrAddTransform()->SetLocalPosition(Vec3(0.f));
-		obj->AddComponent(make_shared<MeshRenderer>());
-		{
-			auto mesh = make_shared<Mesh>();
-			mesh->CreateGrid(10, 10);
-			obj->GetMeshRenderer()->SetMesh(mesh);
-			obj->GetMeshRenderer()->SetPass(0);
-		}
-		{
-			obj->GetMeshRenderer()->SetMaterial(RESOURCES->Get<Material>(L"Veigar"));
-		}
+		obj->AddComponent(make_shared<Terrain>());
+		obj->GetTerrain()->Create(10, 10, RESOURCES->Get<Material>(L"Veigar"));
+
 		CUR_SCENE->Add(obj);
 	}
+	//{
+	//	auto obj = make_shared<GameObject>();
+	//	obj->GetOrAddTransform()->SetLocalPosition(Vec3(0.f));
+	//	obj->AddComponent(make_shared<MeshRenderer>());
+	//	{
+	//		auto mesh = make_shared<Mesh>();
+	//		mesh->CreateGrid(10, 10);
+	//		obj->GetMeshRenderer()->SetMesh(mesh);
+	//		obj->GetMeshRenderer()->SetPass(0);
+	//	}
+	//	{
+	//		obj->GetMeshRenderer()->SetMaterial(RESOURCES->Get<Material>(L"Veigar"));
+	//	}
+	//	CUR_SCENE->Add(obj);
+	//}
 
 	// Mesh
 	{

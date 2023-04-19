@@ -12,10 +12,11 @@ struct OutputDesc
 StructuredBuffer<InputDesc> Input;
 RWStructuredBuffer<OutputDesc> Output;
 
-[numthreads(500,1,1)]
+[numthreads(500, 1, 1)]
 void CS(uint id : SV_GroupIndex)
 {
 	matrix result = Input[id].input * 2;
+
 	Output[id].result = result;
 }
 

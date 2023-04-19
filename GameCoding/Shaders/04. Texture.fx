@@ -18,9 +18,9 @@ struct VertexOutput
 VertexOutput VS(VertexInput input)
 {
 	VertexOutput output;
-	output.position = mul(input.position,World);
-	output.position = mul(output.position,View);
-	output.position = mul(output.position,Projection);
+	output.position = mul(input.position, World);
+	output.position = mul(output.position, View);
+	output.position = mul(output.position, Projection);
 
 	output.uv = input.uv;
 
@@ -36,7 +36,7 @@ float4 PS(VertexOutput input) : SV_TARGET
 
 RasterizerState FillModeWireFrame
 {
-	Fillmode = Wireframe;
+	FillMode = Wireframe;
 };
 
 technique11 T0

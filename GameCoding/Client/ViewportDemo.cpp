@@ -1,5 +1,9 @@
 #include "pch.h"
 #include "ViewportDemo.h"
+#include "RawBuffer.h"
+#include "TextureBuffer.h"
+#include "Material.h"
+#include "SceneDemo.h"
 #include "GeometryHelper.h"
 #include "Camera.h"
 #include "GameObject.h"
@@ -15,11 +19,11 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "Light.h"
-#include "TextureBuffer.h"
-#include "Viewport.h"
+#include "Graphics.h"
 
 void ViewportDemo::Init()
-{	_shader = make_shared<Shader>(L"23. RenderDemo.fx");
+{
+	_shader = make_shared<Shader>(L"23. RenderDemo.fx");
 
 	// Camera
 	{
@@ -43,15 +47,12 @@ void ViewportDemo::Init()
 		CUR_SCENE->Add(light);
 	}
 
-	// Mesh
 	// Material
 	{
 		shared_ptr<Material> material = make_shared<Material>();
 		material->SetShader(_shader);
-
 		auto texture = RESOURCES->Load<Texture>(L"Veigar", L"..\\Resources\\Textures\\veigar.jpg");
 		material->SetDiffuseMap(texture);
-
 		MaterialDesc& desc = material->GetMaterialDesc();
 		desc.ambient = Vec4(1.f);
 		desc.diffuse = Vec4(1.f);
@@ -59,24 +60,23 @@ void ViewportDemo::Init()
 		RESOURCES->Add(L"Veigar", material);
 	}
 
-	for (int32 i = 0; i < 1; i++)
+	// Mesh
+	for (int32 i = 0; i < 10; i++)
 	{
 		auto obj = make_shared<GameObject>();
-		obj->GetOrAddTransform()->SetLocalPosition(Vec3(0.f));
+		obj->GetOrAddTransform()->SetLocalPosition(Vec3(rand() % 10, 0, rand() % 10));
 		obj->AddComponent(make_shared<MeshRenderer>());
 		{
 			obj->GetMeshRenderer()->SetMaterial(RESOURCES->Get<Material>(L"Veigar"));
 		}
 		{
-			auto mesh = RESOURCES->Get<Mesh>(L"Sphere");
+			auto mesh = RESOURCES->Get<Mesh>(L"Cube");
 			obj->GetMeshRenderer()->SetMesh(mesh);
 			obj->GetMeshRenderer()->SetPass(0);
 		}
 
 		CUR_SCENE->Add(obj);
 	}
-
-	//RENDER->Init(_shader);
 }
 
 void ViewportDemo::Update()
@@ -92,21 +92,6 @@ void ViewportDemo::Update()
 	ImGui::InputFloat("Y", &y, 10.f);
 
 	GRAPHICS->SetViewport(width, height, x, y);
-
-	//
-
-	static Vec3 pos = Vec3(2, 0, 0);
-	ImGui::InputFloat3("Pos", (float*)&pos);
-
-	Viewport& vp = GRAPHICS->GetViewport();
-	Vec3 pos2D = vp.Project(pos, Matrix::Identity, Camera::S_MatView, Camera::S_MatProjection);
-
-	ImGui::InputFloat3("Pos2D", (float*)&pos2D);
-
-	{
-		Vec3 temp = vp.UnProject(pos2D, Matrix::Identity, Camera::S_MatView, Camera::S_MatProjection);
-		ImGui::InputFloat3("Recalc", (float*)&temp);
-	}
 }
 
 void ViewportDemo::Render()

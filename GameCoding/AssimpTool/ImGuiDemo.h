@@ -12,8 +12,7 @@ public:
 
 private:
 	bool show_demo_window = true;
-	bool show_another_window =true;
+	bool show_another_window = false;
 	Vec4 clear_color = Vec4(0.f);
-	
 };
 

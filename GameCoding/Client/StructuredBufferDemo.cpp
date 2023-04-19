@@ -8,9 +8,9 @@ void StructuredBufferDemo::Init()
 	_shader = make_shared<Shader>(L"27. StructuredBufferDemo.fx");
 
 	vector<Matrix> inputs(500, Matrix::Identity);
-
-	auto buffer = make_shared<StructuredBuffer>(inputs.data(), sizeof(Matrix), 500, sizeof(Matrix));
 	
+	auto buffer = make_shared<StructuredBuffer>(inputs.data(), sizeof(Matrix), 500, sizeof(Matrix), 500);
+
 	_shader->GetSRV("Input")->SetResource(buffer->GetSRV().Get());
 	_shader->GetUAV("Output")->SetUnorderedAccessView(buffer->GetUAV().Get());
 
@@ -19,7 +19,7 @@ void StructuredBufferDemo::Init()
 	vector<Matrix> outputs(500);
 	buffer->CopyFromOutput(outputs.data());
 
-	 
+
 }
 
 void StructuredBufferDemo::Update()

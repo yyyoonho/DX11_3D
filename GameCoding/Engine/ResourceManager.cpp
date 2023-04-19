@@ -10,7 +10,7 @@ void ResourceManager::Init()
 	CreateDefaultMesh();
 }
 
-shared_ptr<Texture> ResourceManager::GetOrAddTexture(const wstring& key, const wstring& path)
+std::shared_ptr<Texture> ResourceManager::GetOrAddTexture(const wstring& key, const wstring& path)
 {
 	shared_ptr<Texture> texture = Get<Texture>(key);
 

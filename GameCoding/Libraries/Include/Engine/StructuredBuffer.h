@@ -42,3 +42,4 @@ private:
 	uint32 _outputStride = 0;
 	uint32 _outputCount = 0;
 };
+

@@ -21,7 +21,7 @@ WPARAM Game::Run(GameDesc& desc)
 	INPUT->Init(_desc.hWnd);
 	GUI->Init();
 	RESOURCES->Init();
-
+	
 	_desc.app->Init();
 
 	MSG msg = { 0 };
@@ -103,7 +103,7 @@ void Game::Update()
 {
 	TIME->Update();
 	INPUT->Update();
-	ShowFPS();
+	ShowFps();
 
 	GRAPHICS->RenderBegin();
 
@@ -114,11 +114,10 @@ void Game::Update()
 	_desc.app->Render();
 	GUI->Render();
 
-
 	GRAPHICS->RenderEnd();
 }
 
-void Game::ShowFPS()
+void Game::ShowFps()
 {
 	uint32 fps = GET_SINGLE(TimeManager)->GetFps();
 
@@ -126,5 +125,6 @@ void Game::ShowFPS()
 	::wsprintf(text, L"FPS : %d", fps);
 
 	::SetWindowText(_desc.hWnd, text);
+
 }
 

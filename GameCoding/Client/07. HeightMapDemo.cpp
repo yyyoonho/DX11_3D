@@ -71,5 +71,5 @@ void HeightMapDemo::Render()
 	DC->IASetVertexBuffers(0, 1, _vertexBuffer->GetComPtr().GetAddressOf(), &stride, &offset);
 	DC->IASetIndexBuffer(_indexBuffer->GetComPtr().Get(), DXGI_FORMAT_R32_UINT, 0);
 
-	_shader->DrawIndexed(0, 0, _indexBuffer->GetCount(), 0, 0);
+	_shader->DrawIndexed(0, 1, _indexBuffer->GetCount(), 0, 0);
 }

@@ -8,5 +8,4 @@ void SceneManager::Update()
 
 	_currentScene->Update();
 	_currentScene->LateUpdate();
-
 }

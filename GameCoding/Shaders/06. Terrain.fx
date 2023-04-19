@@ -18,9 +18,9 @@ struct VertexOutput
 VertexOutput VS(VertexInput input)
 {
 	VertexOutput output;
-	output.position = mul(input.position,World);
-	output.position = mul(output.position,View);
-	output.position = mul(output.position,Projection);
+	output.position = mul(input.position, World);
+	output.position = mul(output.position, View);
+	output.position = mul(output.position, Projection);
 
 	output.uv = input.uv;
 
@@ -50,6 +50,7 @@ technique11 T0
 		SetVertexShader(CompileShader(vs_5_0, VS()));
 		SetPixelShader(CompileShader(ps_5_0, PS()));
 	}
+
 	pass P1
 	{
 		SetRasterizerState(FillModeWireFrame);

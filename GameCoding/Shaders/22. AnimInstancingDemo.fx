@@ -13,7 +13,7 @@ struct KeyframeDesc
 	float ratio;
 	float sumTime;
 	float speed;
-	float padding;
+	float2 padding;
 };
 
 struct TweenFrameDesc
@@ -47,7 +47,7 @@ struct VS_IN
 	float3 tangent : TANGENT;
 	float4 blendIndices : BLEND_INDICES;
 	float4 blendWeights : BLEND_WEIGHTS;
-	// INSTANCING
+	// INSTANCING;
 	uint instanceID : SV_INSTANCEID;
 	matrix world : INST;
 };
@@ -60,7 +60,6 @@ struct VS_OUT
 	float3 normal : NORMAL;
 };
 
-// 보간적용 O
 matrix GetAnimationMatrix(VS_IN input)
 {
 	float indices[4] = { input.blendIndices.x, input.blendIndices.y, input.blendIndices.z, input.blendIndices.w };
@@ -83,7 +82,6 @@ matrix GetAnimationMatrix(VS_IN input)
 
 	float4 c0, c1, c2, c3;
 	float4 n0, n1, n2, n3;
-
 	matrix curr = 0;
 	matrix next = 0;
 	matrix transform = 0;
@@ -104,7 +102,7 @@ matrix GetAnimationMatrix(VS_IN input)
 
 		matrix result = lerp(curr, next, ratio[0]);
 
-		// 다음 애니메이션이 있는지 체크
+		// 다음 애니메이션
 		if (animIndex[1] >= 0)
 		{
 			c0 = TransformMap.Load(int4(indices[i] * 4 + 0, currFrame[1], animIndex[1], 0));
@@ -127,14 +125,14 @@ matrix GetAnimationMatrix(VS_IN input)
 	}
 
 	return transform;
-
 }
 
 VS_OUT VS(VS_IN input)
 {
 	VS_OUT output;
-//output.position = mul(input.position, BoneTransforms[BoneIndex]); // Model Global
-	
+
+	//output.position = mul(input.position, BoneTransforms[BoneIndex]); // Model Global
+
 	matrix m = GetAnimationMatrix(input);
 
 	output.position = mul(input.position, m);
@@ -150,7 +148,9 @@ VS_OUT VS(VS_IN input)
 float4 PS(VS_OUT input) : SV_TARGET
 {
 	//float4 color = ComputeLight(input.normal, input.uv, input.worldPosition);
+
 	float4 color = DiffuseMap.Sample(LinearSampler, input.uv);
+
 	return color;
 }
 

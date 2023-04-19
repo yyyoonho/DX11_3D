@@ -8,15 +8,16 @@
 #include "Light.h"
 
 ModelAnimator::ModelAnimator(shared_ptr<Shader> shader)
-	:Super(ComponentType::Animator),_shader(shader)
+	: Super(ComponentType::Animator), _shader(shader)
 {
 	// TEST
 	_tweenDesc.next.animIndex = rand() % 3;
-	_tweenDesc.tweenSumTime = rand() % 100;
+	_tweenDesc.tweenSumTime += rand() % 100;
 }
 
 ModelAnimator::~ModelAnimator()
 {
+
 }
 
 void ModelAnimator::SetModel(shared_ptr<Model> model)
@@ -57,7 +58,7 @@ void ModelAnimator::UpdateTweenData()
 		}
 	}
 
-	// 다음 애니메이션이 예약되어 있다면
+	// 다음 애니메이션이 예약 되어 있다면
 	if (desc.next.animIndex >= 0)
 	{
 		desc.tweenSumTime += DT;
@@ -88,7 +89,6 @@ void ModelAnimator::UpdateTweenData()
 			desc.next.ratio = desc.next.sumTime / timePerFrame;
 		}
 	}
-
 }
 
 void ModelAnimator::RenderInstancing(shared_ptr<class InstancingBuffer>& buffer)
@@ -98,7 +98,7 @@ void ModelAnimator::RenderInstancing(shared_ptr<class InstancingBuffer>& buffer)
 	if (_texture == nullptr)
 		CreateTexture();
 
-	// Global Data
+	// GlobalData
 	_shader->PushGlobalData(Camera::S_MatView, Camera::S_MatProjection);
 
 	// Light
@@ -131,6 +131,7 @@ void ModelAnimator::RenderInstancing(shared_ptr<class InstancingBuffer>& buffer)
 
 		mesh->vertexBuffer->PushData();
 		mesh->indexBuffer->PushData();
+
 		buffer->PushData();
 
 		_shader->DrawIndexedInstanced(0, _pass, mesh->indexBuffer->GetCount(), buffer->GetCount());
@@ -244,16 +245,16 @@ void ModelAnimator::CreateAnimationTransform(uint32 index)
 				matAnimation = Matrix::Identity;
 			}
 
-			// !
+			// [ !!!!!!! ]
 			Matrix toRootMatrix = bone->transform;
-			Matrix invGlobal = toRootMatrix.Invert(); 
+			Matrix invGlobal = toRootMatrix.Invert();
 
 			int32 parentIndex = bone->parentIndex;
 
 			Matrix matParent = Matrix::Identity;
 			if (parentIndex >= 0)
 				matParent = tempAnimBoneTransforms[parentIndex];
-
+			
 			tempAnimBoneTransforms[b] = matAnimation * matParent;
 
 			// 결론

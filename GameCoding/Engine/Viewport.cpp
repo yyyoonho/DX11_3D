@@ -43,7 +43,7 @@ Vec3 Viewport::Project(const Vec3& pos, const Matrix& W, const Matrix& V, const 
 	return p;
 }
 
-Vec3 Viewport::UnProject(const Vec3& pos, const Matrix& W, const Matrix& V, const Matrix& P)
+Vec3 Viewport::Unproject(const Vec3& pos, const Matrix& W, const Matrix& V, const Matrix& P)
 {
 	Vec3 p = pos;
 

@@ -18,7 +18,7 @@ struct VS_IN
 	float3 tangent : TANGENT;
 	float4 blendIndices : BLEND_INDICES;
 	float4 blendWeights : BLEND_WEIGHTS;
-	// INSTANCING
+	// INSTANCING;
 	uint instanceID : SV_INSTANCEID;
 	matrix world : INST;
 };
@@ -30,7 +30,6 @@ struct VS_OUT
 	float2 uv : TEXCOORD;
 	float3 normal : NORMAL;
 };
-
 
 VS_OUT VS(VS_IN input)
 {
@@ -49,7 +48,9 @@ VS_OUT VS(VS_IN input)
 float4 PS(VS_OUT input) : SV_TARGET
 {
 	//float4 color = ComputeLight(input.normal, input.uv, input.worldPosition);
+
 	float4 color = DiffuseMap.Sample(LinearSampler, input.uv);
+
 	return color;
 }
 

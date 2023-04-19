@@ -2,6 +2,7 @@
 #include "RawBufferDemo.h"
 #include "RawBuffer.h"
 
+
 void RawBufferDemo::Init()
 {
 	_shader = make_shared<Shader>(L"24. RawBufferDemo.fx");
@@ -13,13 +14,12 @@ void RawBufferDemo::Init()
 
 	_shader->GetUAV("Output")->SetUnorderedAccessView(rawBuffer->GetUAV().Get());
 
-	// x,y,z -> 쓰레드 그룹
+	// x, y, z 쓰레드 그룹
 	_shader->Dispatch(0, 0, 1, 1, 1);
 
 	vector<Output> outputs(count);
 	rawBuffer->CopyFromOutput(outputs.data());
-	
-	// CSV
+
 	FILE* file;
 	::fopen_s(&file, "../RawBuffer.csv", "w");
 

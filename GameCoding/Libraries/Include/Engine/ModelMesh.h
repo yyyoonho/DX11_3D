@@ -30,3 +30,4 @@ struct ModelMesh
 	int32 boneIndex;
 	shared_ptr<ModelBone> bone; // Cache;
 };
+

@@ -41,7 +41,7 @@ void SceneDemo::Init()
 		light->GetLight()->SetLightDesc(lightDesc);
 		CUR_SCENE->Add(light);
 	}
-
+	
 	// Animation
 	shared_ptr<class Model> m1 = make_shared<Model>();
 	m1->ReadModel(L"Kachujin/Kachujin");

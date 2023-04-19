@@ -51,3 +51,4 @@ public:
 private:
 	HANDLE _handle = INVALID_HANDLE_VALUE;
 };
+

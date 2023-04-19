@@ -7,7 +7,7 @@ class Light : public Component
 public:
 	Light();
 	virtual ~Light();
-
+	
 	virtual void Update();
 
 public:
@@ -23,3 +23,4 @@ public:
 private:
 	LightDesc _desc;
 };
+

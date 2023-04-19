@@ -67,6 +67,6 @@ void TweenDemo::CreateKachujin()
 	_obj->AddComponent(make_shared<ModelAnimator>(_shader));
 	{
 		_obj->GetModelAnimator()->SetModel(m1);
-		_obj->GetModelAnimator()->SetPass(1);
+		//_obj->GetModelAnimator()->SetPass(1);
 	}
 }

@@ -37,3 +37,4 @@ private:
 	uint32						_maxCount = 0;
 	vector<InstancingData>		_data;
 };
+

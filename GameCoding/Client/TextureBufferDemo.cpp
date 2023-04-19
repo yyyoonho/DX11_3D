@@ -44,18 +44,15 @@ void TextureBufferDemo::Init()
 		light->GetLight()->SetLightDesc(lightDesc);
 		CUR_SCENE->Add(light);
 	}
+	
 
 	// Mesh
 	// Material
 	{
 		shared_ptr<Material> material = make_shared<Material>();
 		material->SetShader(_shader);
-
-		//auto texture = RESOURCES->Load<Texture>(L"Veigar", L"..\\Resources\\Textures\\veigar.jpg");
-		
 		auto texture = make_shared<Texture>();
 		texture->SetSRV(newSrv);
-
 		material->SetDiffuseMap(texture);
 		MaterialDesc& desc = material->GetMaterialDesc();
 		desc.ambient = Vec4(1.f);
@@ -94,10 +91,10 @@ void TextureBufferDemo::Render()
 
 }
 
-ComPtr<ID3D11ShaderResourceView> TextureBufferDemo::MakeComputeShaderTexture()
+Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> TextureBufferDemo::MakeComputeShaderTexture()
 {
 	auto shader = make_shared<Shader>(L"26. TextureBufferDemo.fx");
-
+	
 	auto texture = RESOURCES->Load<Texture>(L"Veigar", L"..\\Resources\\Textures\\veigar.jpg");
 	shared_ptr<TextureBuffer> textureBuffer = make_shared<TextureBuffer>(texture->GetTexture2D());
 
@@ -108,8 +105,8 @@ ComPtr<ID3D11ShaderResourceView> TextureBufferDemo::MakeComputeShaderTexture()
 	uint32 height = textureBuffer->GetHeight();
 	uint32 arraySize = textureBuffer->GetArraySize();
 
-	uint32 x = max(1, (width+31)/32);
-	uint32 y = max(1, (height+31/32));
+	uint32 x = max(1, (width + 31) / 32);
+	uint32 y = max(1, (height + 31) / 32);
 	shader->Dispatch(0, 0, x, y, arraySize);
 
 	return textureBuffer->GetOutputSRV();

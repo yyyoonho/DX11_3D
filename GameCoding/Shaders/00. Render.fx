@@ -7,14 +7,15 @@
 #define MAX_MODEL_KEYFRAMES 500
 #define MAX_MODEL_INSTANCE 500
 
-// ************ MeshRender ************
+// ************** MeshRender ****************
+
 struct VertexMesh
 {
 	float4 position : POSITION;
 	float2 uv : TEXCOORD;
 	float3 normal : NORMAL;
 	float3 tangent : TANGENT;
-	// INSTANCING
+	// INSTANCING;
 	uint instanceID : SV_INSTANCEID;
 	matrix world : INST;
 };
@@ -32,7 +33,8 @@ MeshOutput VS_Mesh(VertexMesh input)
 	return output;
 }
 
-// ************ ModelRender ************
+// ************** ModelRender ****************
+
 struct VertexModel
 {
 	float4 position : POSITION;
@@ -41,7 +43,7 @@ struct VertexModel
 	float3 tangent : TANGENT;
 	float4 blendIndices : BLEND_INDICES;
 	float4 blendWeights : BLEND_WEIGHTS;
-	// INSTANCING
+	// INSTANCING;
 	uint instanceID : SV_INSTANCEID;
 	matrix world : INST;
 };
@@ -67,7 +69,8 @@ MeshOutput VS_Model(VertexModel input)
 	return output;
 }
 
-// ************ AnimRender ************
+// ************** AnimRender ****************
+
 struct KeyframeDesc
 {
 	int animIndex;
@@ -76,7 +79,7 @@ struct KeyframeDesc
 	float ratio;
 	float sumTime;
 	float speed;
-	float padding;
+	float2 padding;
 };
 
 struct TweenFrameDesc
@@ -118,7 +121,6 @@ matrix GetAnimationMatrix(VertexModel input)
 
 	float4 c0, c1, c2, c3;
 	float4 n0, n1, n2, n3;
-
 	matrix curr = 0;
 	matrix next = 0;
 	matrix transform = 0;
@@ -139,7 +141,7 @@ matrix GetAnimationMatrix(VertexModel input)
 
 		matrix result = lerp(curr, next, ratio[0]);
 
-		// 다음 애니메이션이 있는지 체크
+		// 다음 애니메이션
 		if (animIndex[1] >= 0)
 		{
 			c0 = TransformMap.Load(int4(indices[i] * 4 + 0, currFrame[1], animIndex[1], 0));

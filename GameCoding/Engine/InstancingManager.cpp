@@ -51,7 +51,6 @@ void InstancingManager::RenderMeshRenderer(vector<shared_ptr<GameObject>>& gameO
 				AddData(instanceId, data);
 			}
 
-			//막타
 			shared_ptr<InstancingBuffer>& buffer = _buffers[instanceId];
 			vec[0]->GetMeshRenderer()->RenderInstancing(buffer);
 		}
@@ -76,6 +75,11 @@ void InstancingManager::RenderModelRenderer(vector<shared_ptr<GameObject>>& game
 	{
 		const vector<shared_ptr<GameObject>>& vec = pair.second;
 
+		//if (vec.size() == 1)
+		//{
+		//	vec[0]->GetMeshRenderer()->RenderSingle();
+		//}
+		//else
 		{
 			const InstanceID instanceId = pair.first;
 
@@ -88,7 +92,6 @@ void InstancingManager::RenderModelRenderer(vector<shared_ptr<GameObject>>& game
 				AddData(instanceId, data);
 			}
 
-			//막타
 			shared_ptr<InstancingBuffer>& buffer = _buffers[instanceId];
 			vec[0]->GetModelRenderer()->RenderInstancing(buffer);
 		}
@@ -107,13 +110,18 @@ void InstancingManager::RenderAnimRenderer(vector<shared_ptr<GameObject>>& gameO
 		const InstanceID instanceId = gameObject->GetModelAnimator()->GetInstanceID();
 		cache[instanceId].push_back(gameObject);
 	}
-	
+
 	for (auto& pair : cache)
 	{
 		shared_ptr<InstancedTweenDesc> tweenDesc = make_shared<InstancedTweenDesc>();
 
 		const vector<shared_ptr<GameObject>>& vec = pair.second;
 
+		//if (vec.size() == 1)
+		//{
+		//	vec[0]->GetModelAnimator()->RenderSingle();
+		//}
+		//else
 		{
 			const InstanceID instanceId = pair.first;
 
@@ -127,13 +135,11 @@ void InstancingManager::RenderAnimRenderer(vector<shared_ptr<GameObject>>& gameO
 
 				// INSTANCING
 				gameObject->GetModelAnimator()->UpdateTweenData();
-				TweenDesc& desc = gameObject->GetModelAnimator()->GetTweenDesc();
-				tweenDesc->tweens[i] = desc;
+				tweenDesc->tweens[i] = gameObject->GetModelAnimator()->GetTweenDesc();
 			}
 
 			vec[0]->GetModelAnimator()->GetShader()->PushTweenData(*tweenDesc.get());
 
-			//막타
 			shared_ptr<InstancingBuffer>& buffer = _buffers[instanceId];
 			vec[0]->GetModelAnimator()->RenderInstancing(buffer);
 		}

@@ -7,13 +7,13 @@ enum class ProjectionType
 	Orthographic, // 직교 투영
 };
 
-class Camera : public Component
+class Camera :  public Component
 {
 	using Super = Component;
 public:
 	Camera();
 	virtual ~Camera();
-
+	
 	virtual void Update() override;
 
 	void UpdateMatrix();

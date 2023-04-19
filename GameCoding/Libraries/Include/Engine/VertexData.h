@@ -38,8 +38,8 @@ struct VertexTextureNormalTangentBlendData
 	Vec2 uv = { 0, 0 };
 	Vec3 normal = { 0, 0, 0 };
 	Vec3 tangent = { 0, 0, 0 };
-	Vec4 blendIndices = { 0,0,0,0 };
-	Vec4 blendWeights = { 0,0,0,0 };
+	Vec4 blendIndices = { 0, 0, 0, 0 };
+	Vec4 blendWeights = { 0, 0, 0, 0 };
 };
 
 using ModelVertexType = VertexTextureNormalTangentBlendData;

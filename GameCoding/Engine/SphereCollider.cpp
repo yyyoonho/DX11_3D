@@ -33,12 +33,12 @@ bool SphereCollider::Intersects(shared_ptr<BaseCollider>& other)
 
 	switch (type)
 	{
-	case ColliderType::Sphere:
-		return _boundingSphere.Intersects(dynamic_pointer_cast<SphereCollider>(other)->GetBoundingSphere());
-	case ColliderType::AABB:
-		return _boundingSphere.Intersects(dynamic_pointer_cast<AABBBoxCollider>(other)->GetBoundingBox());
-	case ColliderType::OBB:
-		return _boundingSphere.Intersects(dynamic_pointer_cast<OBBBoxCollider>(other)->GetBoundingBox());
+		case ColliderType::Sphere:
+			return _boundingSphere.Intersects(dynamic_pointer_cast<SphereCollider>(other)->GetBoundingSphere());
+		case ColliderType::AABB:
+			return _boundingSphere.Intersects(dynamic_pointer_cast<AABBBoxCollider>(other)->GetBoundingBox());
+		case ColliderType::OBB:
+			return _boundingSphere.Intersects(dynamic_pointer_cast<OBBBoxCollider>(other)->GetBoundingBox());
 	}
 
 	return false;

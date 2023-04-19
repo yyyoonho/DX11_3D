@@ -5,10 +5,9 @@
 class ConstBufferDemo : public IExecute
 {
 public:
-	virtual void Init() override;
-	virtual void Update() override;
-	virtual void Render() override;
-
+	void Init() override;
+	void Update() override;
+	void Render() override;
 
 	shared_ptr<Shader> _shader;
 
@@ -16,7 +15,7 @@ public:
 	shared_ptr<VertexBuffer> _vertexBuffer;
 	shared_ptr<IndexBuffer> _indexBuffer;
 
-	Vec3 _translation = Vec3{ 0.f, 0.f, 0.f };
+	Vec3 _translation = Vec3(0.f, 0.f, 0.f);
 
 	Matrix _world = Matrix::Identity;
 	Matrix _view = Matrix::Identity;

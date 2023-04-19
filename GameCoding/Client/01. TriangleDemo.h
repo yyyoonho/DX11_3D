@@ -4,9 +4,10 @@
 class TriangleDemo : public IExecute
 {
 public:
-	virtual void Init() override;
-	virtual void Update() override;
-	virtual void Render() override;
+	void Init() override;
+	void Update() override;
+	void Render() override;
+
 
 	shared_ptr<Shader> _shader;
 	vector<VertexData> _vertices;

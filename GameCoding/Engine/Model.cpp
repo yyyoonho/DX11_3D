@@ -8,7 +8,6 @@
 #include "ModelMesh.h"
 #include "ModelAnimation.h"
 
-
 Model::Model()
 {
 
@@ -242,7 +241,6 @@ void Model::ReadAnimation(wstring filename)
 	_animations.push_back(animation);
 }
 
-
 std::shared_ptr<Material> Model::GetMaterialByName(const wstring& name)
 {
 	for (auto& material : _materials)
@@ -276,7 +274,7 @@ std::shared_ptr<ModelBone> Model::GetBoneByName(const wstring& name)
 	return nullptr;
 }
 
-shared_ptr<ModelAnimation> Model::GetAnimationByName(wstring name)
+std::shared_ptr<ModelAnimation> Model::GetAnimationByName(wstring name)
 {
 	for (auto& animation : _animations)
 	{

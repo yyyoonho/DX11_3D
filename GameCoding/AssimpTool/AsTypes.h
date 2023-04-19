@@ -1,10 +1,10 @@
 #pragma once
+
 using VertexType = VertexTextureNormalTangentBlendData;
 
 struct asBone
 {
 	string name;
-
 	int32 index = -1;
 	int32 parent = -1;
 	Matrix transform;
@@ -13,7 +13,6 @@ struct asBone
 struct asMesh
 {
 	string name;
-
 	aiMesh* mesh;
 	vector<VertexType> vertices;
 	vector<uint32> indices;
@@ -25,12 +24,10 @@ struct asMesh
 struct asMaterial
 {
 	string name;
-
 	Color ambient;
 	Color diffuse;
 	Color specular;
 	Color emissive;
-
 	string diffuseFile;
 	string specularFile;
 	string normalFile;
@@ -53,12 +50,11 @@ struct asBlendWeight
 		}
 	}
 
-	Vec4 indices = Vec4( 0,0,0,0 );
-	Vec4 weights = Vec4( 0,0,0,0 );
+	Vec4 indices = Vec4(0, 0, 0, 0);
+	Vec4 weights = Vec4(0, 0, 0, 0);
 };
 
-
-// 정점마다 -> (관절 번호, 가중치)
+// 정점마다 -> (관절번호, 가중치)
 struct asBoneWeights
 {
 	void AddWeights(uint32 boneIndex, float weight)

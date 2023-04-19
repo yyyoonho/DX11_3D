@@ -44,7 +44,6 @@ struct MaterialDesc
 struct BoneDesc
 {
 	Matrix transforms[MAX_MODEL_TRANSFORMS];
-
 };
 
 // Animation
@@ -57,7 +56,6 @@ struct KeyframeDesc
 	float sumTime = 0.f;
 	float speed = 1.f;
 	Vec2 padding;
-
 };
 
 struct TweenDesc
@@ -77,7 +75,7 @@ struct TweenDesc
 		tweenSumTime = 0;
 		tweenRatio = 0;
 	}
-
+	
 	float tweenDuration = 1.0f;
 	float tweenRatio = 0.f;
 	float tweenSumTime = 0.f;
@@ -90,4 +88,3 @@ struct InstancedTweenDesc
 {
 	TweenDesc tweens[MAX_MODEL_INSTANCE];
 };
-

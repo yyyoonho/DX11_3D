@@ -18,3 +18,4 @@ private:
 	float _radius = 1.f;
 	BoundingSphere _boundingSphere;
 };
+

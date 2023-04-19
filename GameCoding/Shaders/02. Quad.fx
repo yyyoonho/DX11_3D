@@ -27,7 +27,7 @@ float4 PS(VertexOutput input) : SV_TARGET
 
 RasterizerState FillModeWireFrame
 {
-	Fillmode = Wireframe;
+	FillMode = Wireframe;
 };
 
 technique11 T0

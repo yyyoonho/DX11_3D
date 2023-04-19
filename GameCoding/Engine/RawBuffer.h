@@ -1,4 +1,6 @@
 #pragma once
+
+
 class RawBuffer
 {
 public:
@@ -32,6 +34,5 @@ private:
 	void* _inputData;
 	uint32 _inputByte = 0;
 	uint32 _outputByte = 0;
-
 };
 

@@ -10,8 +10,5 @@ public:
 
 private:
 	shared_ptr<Shader> _shader;
-
-private:
-
 };
 

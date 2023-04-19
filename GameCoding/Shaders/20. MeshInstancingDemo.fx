@@ -7,7 +7,7 @@ struct VS_IN
 	float2 uv : TEXCOORD;
 	float3 normal : NORMAL;
 	float3 tangent : TANGENT;
-	// INSTANCING
+	// INSTANCING;
 	uint instanceID : SV_INSTANCEID;
 	matrix world : INST;
 };
@@ -19,19 +19,6 @@ struct VS_OUT
 	float2 uv : TEXCOORD;
 	float3 normal : NORMAL;
 };
-
-//VS_OUT VS(VS_IN input)
-//{
-//	VS_OUT output;
-//
-//	output.position = mul(input.position, W);
-//	output.worldPosition = output.position;
-//	output.position = mul(output.position, VP);
-//	output.uv = input.uv;
-//	output.normal = input.normal;
-//
-//	return output;
-//}
 
 VS_OUT VS(VS_IN input)
 {
@@ -48,9 +35,16 @@ VS_OUT VS(VS_IN input)
 
 float4 PS(VS_OUT input) : SV_TARGET
 {
-	//float4 color = ComputeLight(input.normal, input.uv, input.worldPosition);
-	float4 color = DiffuseMap.Sample(LinearSampler, input.uv);
+	float4 color = ComputeLight(input.normal, input.uv, input.worldPosition);
+
+	//float4 color = DiffuseMap.Sample(LinearSampler, input.uv);
+
 	return color;
+}
+
+float4 PS_RED(VS_OUT input) : SV_TARGET
+{
+	return float4(1, 0, 0, 1);
 }
 
 technique11 T0

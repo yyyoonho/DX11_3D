@@ -26,12 +26,12 @@ void MeshRenderer::RenderInstancing(shared_ptr<class InstancingBuffer>& buffer)
 	if (shader == nullptr)
 		return;
 
-	// Global Data
+	// GlobalData
 	shader->PushGlobalData(Camera::S_MatView, Camera::S_MatProjection);
 
 	// Light
 	auto lightObj = SCENE->GetCurrentScene()->GetLight();
-	if(lightObj)
+	if (lightObj)
 		shader->PushLightData(lightObj->GetLight()->GetLightDesc());
 
 	// Light
@@ -40,6 +40,7 @@ void MeshRenderer::RenderInstancing(shared_ptr<class InstancingBuffer>& buffer)
 	// IA
 	_mesh->GetVertexBuffer()->PushData();
 	_mesh->GetIndexBuffer()->PushData();
+
 	buffer->PushData();
 
 	shader->DrawIndexedInstanced(0, _pass, _mesh->GetIndexBuffer()->GetCount(), buffer->GetCount());

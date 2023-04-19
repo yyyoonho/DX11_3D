@@ -64,7 +64,6 @@ public:
 	void PushKeyframeData(const KeyframeDesc& desc);
 	void PushTweenData(const InstancedTweenDesc& desc);
 
-
 private:
 	GlobalDesc _globalDesc;
 	shared_ptr<ConstantBuffer<GlobalDesc>> _globalBuffer;
@@ -93,7 +92,6 @@ private:
 	InstancedTweenDesc _tweenDesc;
 	shared_ptr<ConstantBuffer<InstancedTweenDesc>> _tweenBuffer;
 	ComPtr<ID3DX11EffectConstantBuffer> _tweenEffectBuffer;
-
 };
 
 class ShaderManager

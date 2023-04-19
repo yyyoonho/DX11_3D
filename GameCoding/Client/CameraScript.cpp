@@ -15,10 +15,13 @@ void CameraScript::Update()
 
 	if (INPUT->GetButton(KEY_TYPE::W))
 		pos += GetTransform()->GetLook() * _speed * dt;
-	if (INPUT->GetButton(KEY_TYPE::A))
-		pos -= GetTransform()->GetRight() * _speed * dt;
+
 	if (INPUT->GetButton(KEY_TYPE::S))
 		pos -= GetTransform()->GetLook() * _speed * dt;
+
+	if (INPUT->GetButton(KEY_TYPE::A))
+		pos -= GetTransform()->GetRight() * _speed * dt;
+
 	if (INPUT->GetButton(KEY_TYPE::D))
 		pos += GetTransform()->GetRight() * _speed * dt;
 
@@ -51,5 +54,4 @@ void CameraScript::Update()
 		rotation.y -= dt * 0.5f;
 		GetTransform()->SetLocalRotation(rotation);
 	}
-
 }

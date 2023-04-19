@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "CameraScript.h"
 #include "MeshRenderer.h"
+#include "Mesh.h"
 
 void MeshDemo::Init()
 {
@@ -13,7 +14,7 @@ void MeshDemo::Init()
 	_camera->GetOrAddTransform();
 	_camera->AddComponent(make_shared<Camera>());
 	_camera->AddComponent(make_shared<CameraScript>());
-
+	
 	// Object
 	_obj = make_shared<GameObject>();
 	_obj->GetOrAddTransform();

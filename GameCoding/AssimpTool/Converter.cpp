@@ -8,11 +8,12 @@
 Converter::Converter()
 {
 	_importer = make_shared<Assimp::Importer>();
-	
+
 }
 
 Converter::~Converter()
 {
+
 }
 
 void Converter::ReadAssetFile(wstring file)
@@ -84,11 +85,10 @@ void Converter::ExportMaterialData(wstring savePath)
 	WriteMaterialData(finalPath);
 }
 
-void Converter::ExportAnimationData(wstring savePath, uint32 index)
+void Converter::ExportAnimationData(wstring savePath, uint32 index /*= 0*/)
 {
 	wstring finalPath = _modelPath + savePath + L".clip";
 	assert(index < _scene->mNumAnimations);
-
 	shared_ptr<asAnimation> animation = ReadAnimationData(_scene->mAnimations[index]);
 	WriteAnimationData(animation, finalPath);
 }
@@ -96,21 +96,20 @@ void Converter::ExportAnimationData(wstring savePath, uint32 index)
 void Converter::ReadModelData(aiNode* node, int32 index, int32 parent)
 {
 	shared_ptr<asBone> bone = make_shared<asBone>();
-
 	bone->index = index;
 	bone->parent = parent;
 	bone->name = node->mName.C_Str();
 
-	// 직속 상관을 기준으로한 Transform (Relative Transform)
-	Matrix transform(node->mTransformation[0]); // 주소를 넣으면 전체 값이 복사가 될 수 있도록 오버로딩되어있다.
+	// Relative Transform
+	Matrix transform(node->mTransformation[0]);
 	bone->transform = transform.Transpose();
 
-	// Root 까지 가는 행렬
+	// 2) Root (Local)
 	Matrix matParent = Matrix::Identity;
 	if (parent >= 0)
 		matParent = _bones[parent]->transform;
 
-	// Root를 기준으로한 Transform (Local Transform)
+	// Local (Root) Transform
 	bone->transform = bone->transform * matParent;
 
 	_bones.push_back(bone);
@@ -118,7 +117,7 @@ void Converter::ReadModelData(aiNode* node, int32 index, int32 parent)
 	// Mesh
 	ReadMeshData(node, index);
 
-	// 재귀함수
+	// 재귀 함수
 	for (uint32 i = 0; i < node->mNumChildren; i++)
 		ReadModelData(node->mChildren[i], _bones.size(), index);
 }
@@ -134,9 +133,7 @@ void Converter::ReadMeshData(aiNode* node, int32 bone)
 
 	for (uint32 i = 0; i < node->mNumMeshes; i++)
 	{
-		uint32 index = node->mMeshes[i]; 
-		// 노드에서 꺼낸 Mesh는 Mesh그 자체가 아니라 index다.
-		// 꺼낸 index로 Scene에 요청하면 그제서야 mesh를 반환해준다.
+		uint32 index = node->mMeshes[i];
 		const aiMesh* srcMesh = _scene->mMeshes[index];
 
 		// Material Name
@@ -160,7 +157,7 @@ void Converter::ReadMeshData(aiNode* node, int32 bone)
 				::memcpy(&vertex.normal, &srcMesh->mNormals[v], sizeof(Vec3));
 
 			mesh->vertices.push_back(vertex);
-		} 
+		}
 
 		// Index
 		for (uint32 f = 0; f < srcMesh->mNumFaces; f++)
@@ -173,7 +170,6 @@ void Converter::ReadMeshData(aiNode* node, int32 bone)
 	}
 
 	_meshes.push_back(mesh);
-	
 }
 
 void Converter::ReadSkinData()
@@ -199,7 +195,6 @@ void Converter::ReadSkinData()
 			{
 				uint32 index = srcMeshBone->mWeights[w].mVertexId;
 				float weight = srcMeshBone->mWeights[w].mWeight;
-
 				tempVertexBoneWeights[index].AddWeights(boneIndex, weight);
 			}
 		}
@@ -213,7 +208,6 @@ void Converter::ReadSkinData()
 			mesh->vertices[v].blendIndices = blendWeight.indices;
 			mesh->vertices[v].blendWeights = blendWeight.weights;
 		}
-
 	}
 }
 
@@ -223,7 +217,7 @@ void Converter::WriteModelFile(wstring finalPath)
 
 	// 폴더가 없으면 만든다.
 	filesystem::create_directory(path.parent_path());
-	
+
 	shared_ptr<FileUtils> file = make_shared<FileUtils>();
 	file->Open(finalPath, FileMode::Write);
 
@@ -259,7 +253,7 @@ void Converter::ReadMaterialData()
 {
 	for (uint32 i = 0; i < _scene->mNumMaterials; i++)
 	{
-		aiMaterial* srcMaterial = _scene->mMaterials[i];
+		aiMaterial* srcMaterial =  _scene->mMaterials[i];
 
 		shared_ptr<asMaterial> material = make_shared<asMaterial>();
 		material->name = srcMaterial->GetName().C_Str();
@@ -372,7 +366,7 @@ void Converter::WriteMaterialData(wstring finalPath)
 	document->SaveFile(Utils::ToString(finalPath).c_str());
 }
 
-string Converter::WriteTexture(string saveFolder, string file)
+std::string Converter::WriteTexture(string saveFolder, string file)
 {
 	string fileName = filesystem::path(file).filename().string();
 	string folderName = filesystem::path(saveFolder).filename().string();
@@ -430,13 +424,13 @@ string Converter::WriteTexture(string saveFolder, string file)
 	return fileName;
 }
 
-shared_ptr<asAnimation> Converter::ReadAnimationData(aiAnimation* srcAnimation)
+std::shared_ptr<asAnimation> Converter::ReadAnimationData(aiAnimation* srcAnimation)
 {
 	shared_ptr<asAnimation> animation = make_shared<asAnimation>();
 	animation->name = srcAnimation->mName.C_Str();
 	animation->frameRate = (float)srcAnimation->mTicksPerSecond;
 	animation->frameCount = (uint32)srcAnimation->mDuration + 1;
-	
+
 	map<string, shared_ptr<asAnimationNode>> cacheAnimNodes;
 
 	for (uint32 i = 0; i < srcAnimation->mNumChannels; i++)
@@ -451,12 +445,13 @@ shared_ptr<asAnimation> Converter::ReadAnimationData(aiAnimation* srcAnimation)
 
 		cacheAnimNodes[srcNode->mNodeName.C_Str()] = node;
 	}
+
 	ReadKeyframeData(animation, _scene->mRootNode, cacheAnimNodes);
 
 	return animation;
 }
 
-shared_ptr<asAnimationNode> Converter::ParseAnimationNode(shared_ptr<asAnimation> animation, aiNodeAnim* srcNode)
+std::shared_ptr<asAnimationNode> Converter::ParseAnimationNode(shared_ptr<asAnimation> animation, aiNodeAnim* srcNode)
 {
 	std::shared_ptr<asAnimationNode> node = make_shared<asAnimationNode>();
 	node->name = srcNode->mNodeName;

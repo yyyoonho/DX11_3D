@@ -5,10 +5,9 @@ class Model;
 
 struct AnimTransform
 {
-	// [ ][ ][ ][ ][ ][ ][ ][ ]... 250개의 관절정보
+	// [ ][ ][ ][ ][ ][ ][ ] ... 250개
 	using TransformArrayType = array<Matrix, MAX_MODEL_TRANSFORMS>;
-
-	// [ ][ ][ ][ ][ ][ ][ ][ ]... 500개
+	// [ ][ ][ ][ ][ ][ ][ ] ... 500 개
 	array<TransformArrayType, MAX_MODEL_KEYFRAMES> transforms;
 };
 

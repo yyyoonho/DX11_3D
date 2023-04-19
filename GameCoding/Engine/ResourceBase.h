@@ -1,6 +1,6 @@
 #pragma once
 
-enum class ResourceType : int8
+enum class ResourceType : uint8
 {
 	None = -1,
 	Mesh,

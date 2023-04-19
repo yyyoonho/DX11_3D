@@ -1,25 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Main">
-      <UniqueIdentifier>{962e8358-a4aa-4ef4-8773-cec5d6934e58}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utils">
-      <UniqueIdentifier>{60053874-d960-4bb2-8547-46047b305f09}</UniqueIdentifier>
+      <UniqueIdentifier>{ac2707b9-7e9e-429b-8b19-04f6be50bbee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{065cfe78-dd73-4da0-bb14-c9d4e54cadf9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game">
-      <UniqueIdentifier>{7261c554-cf4f-4b65-a3a6-6138a51cd3a7}</UniqueIdentifier>
+      <UniqueIdentifier>{5178d4fa-8861-4df8-9e86-ec4fe566eedf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="CameraScript.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraScript.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Converter.cpp">
       <Filter>Utils</Filter>
@@ -47,14 +47,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>Main</Filter>
+    </ClInclude>
     <ClInclude Include="Main.h">
       <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="CameraScript.h">
       <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="Converter.h">
       <Filter>Utils</Filter>

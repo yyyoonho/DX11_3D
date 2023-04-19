@@ -49,3 +49,4 @@ private:
 	vector<shared_ptr<ModelMesh>> _meshes;
 	vector<shared_ptr<ModelAnimation>> _animations;
 };
+

@@ -33,7 +33,7 @@ void ModelRenderer::RenderInstancing(shared_ptr<class InstancingBuffer>& buffer)
 	if (_model == nullptr)
 		return;
 
-	// Global Data
+	// GlobalData
 	_shader->PushGlobalData(Camera::S_MatView, Camera::S_MatProjection);
 
 	// Light
@@ -52,10 +52,6 @@ void ModelRenderer::RenderInstancing(shared_ptr<class InstancingBuffer>& buffer)
 	}
 	_shader->PushBoneData(boneDesc);
 
-	// Transform
-	auto world = GetTransform()->GetWorldMatrix();
-	_shader->PushTransformData(TransformDesc{ world });
-
 	const auto& meshes = _model->GetMeshes();
 	for (auto& mesh : meshes)
 	{
@@ -64,7 +60,6 @@ void ModelRenderer::RenderInstancing(shared_ptr<class InstancingBuffer>& buffer)
 
 		// BoneIndex
 		_shader->GetScalar("BoneIndex")->SetInt(mesh->boneIndex);
-
 
 		// IA
 		mesh->vertexBuffer->PushData();

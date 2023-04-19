@@ -9,7 +9,7 @@ struct ComputeInput
 	uint groupIndex : SV_GroupIndex;
 };
 
-[numthreads(10,8,3)]
+[numthreads(10, 8, 3)]
 void CS(ComputeInput input)
 {
 	uint index = input.groupID.x * (10 * 8 * 3) + input.groupIndex;

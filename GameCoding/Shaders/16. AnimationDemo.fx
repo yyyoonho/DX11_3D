@@ -12,7 +12,7 @@ struct KeyframeDesc
 	float ratio;
 	float sumTime;
 	float speed;
-	float padding;
+	float2 padding;
 };
 
 cbuffer KeyframeBuffer
@@ -28,7 +28,7 @@ cbuffer BoneBuffer
 uint BoneIndex;
 Texture2DArray TransformMap;
 
-// 보간적용 XXX
+//
 //matrix GetAnimationMatrix(VertexTextureNormalTangentBlend input)
 //{
 //	float indices[4] = { input.blendIndices.x, input.blendIndices.y, input.blendIndices.z, input.blendIndices.w };
@@ -41,23 +41,21 @@ Texture2DArray TransformMap;
 //	float4 c0, c1, c2, c3;
 //	matrix curr = 0;
 //	matrix transform = 0;
-//	
+//
 //	for (int i = 0; i < 4; i++)
 //	{
 //		c0 = TransformMap.Load(int4(indices[i] * 4 + 0, currFrame, animIndex, 0));
 //		c1 = TransformMap.Load(int4(indices[i] * 4 + 1, currFrame, animIndex, 0));
 //		c2 = TransformMap.Load(int4(indices[i] * 4 + 2, currFrame, animIndex, 0));
 //		c3 = TransformMap.Load(int4(indices[i] * 4 + 3, currFrame, animIndex, 0));
-//	
+//
 //		curr = matrix(c0, c1, c2, c3);
 //		transform += mul(weights[i], curr);
 //	}
-//	
-//	return transform;
 //
+//	return transform;
 //}
 
-// 보간적용 OOO
 matrix GetAnimationMatrix(VertexTextureNormalTangentBlend input)
 {
 	float indices[4] = { input.blendIndices.x, input.blendIndices.y, input.blendIndices.z, input.blendIndices.w };
@@ -80,7 +78,7 @@ matrix GetAnimationMatrix(VertexTextureNormalTangentBlend input)
 		c0 = TransformMap.Load(int4(indices[i] * 4 + 0, currFrame, animIndex, 0));
 		c1 = TransformMap.Load(int4(indices[i] * 4 + 1, currFrame, animIndex, 0));
 		c2 = TransformMap.Load(int4(indices[i] * 4 + 2, currFrame, animIndex, 0));
-		c3 = TransformMap.Load(int4(indices[i] * 4 + 3, currFrame, animIndex, 0));
+		c3 = TransformMap.Load(int4(indices[i] * 4 + 3, currFrame, animIndex, 0));		
 		curr = matrix(c0, c1, c2, c3);
 
 		n0 = TransformMap.Load(int4(indices[i] * 4 + 0, nextFrame, animIndex, 0));
@@ -95,26 +93,19 @@ matrix GetAnimationMatrix(VertexTextureNormalTangentBlend input)
 	}
 
 	return transform;
-
 }
 
 MeshOutput VS(VertexTextureNormalTangentBlend input)
 {
 	MeshOutput output;
 
-	// 입력에 따라 원래 있던 T포즈 global에서 어떤 특정 Relative(Local)로 갔다가, 
-	// 그 bone에 해당하는 새로운 애니메이션의 Global로 가는 행렬
-	// (정리)
-	// 1. 애니메이션은 뼈를 움직인다.
-	// 2. 뼈가 움직이면 뼈에 영향을 받는 Vertex들도 같이 움직인다.
-	// 3. m행렬은 각각의 Vertex가 애니메이션 연산(즉, 뼈의 이동)에 따른 영향을 계산해주는 행렬이다.
-	// => 애니메이션 적용!
+	// TODO
 	matrix m = GetAnimationMatrix(input);
 
-	output.position = mul(input.position, m); // 즉, 애니메이션의 글로벌로 가는 m
+	output.position = mul(input.position, m);
 	output.position = mul(output.position, W);
 	output.worldPosition = output.position.xyz;
-	output.position = mul(output.position, VP);
+	output.position = mul(output.position, VP);	
 	output.uv = input.uv;
 	output.normal = mul(input.normal, (float3x3)W);
 	output.tangent = mul(input.tangent, (float3x3)W);
@@ -125,16 +116,15 @@ MeshOutput VS(VertexTextureNormalTangentBlend input)
 float4 PS(MeshOutput input) : SV_TARGET
 {
 	//ComputeNormalMapping(input.normal, input.tangent, input.uv);
-
 	//float4 color = ComputeLight(input.normal, input.uv, input.worldPosition);
+	float4 color = DiffuseMap.Sample(LinearSampler, input.uv);
 
-	float color = DiffuseMap.Sample(LinearSampler, input.uv);
 	return color;
 }
 
 float4 PS_RED(MeshOutput input) : SV_TARGET
 {
-	return float4(1,0,0,1);
+	return float4(1, 0, 0, 1);
 }
 
 technique11 T0

@@ -14,6 +14,7 @@ public:
 		_currentScene = scene;
 		scene->Start();
 	}
+
 	shared_ptr<Scene> GetCurrentScene() { return _currentScene; }
 
 private:

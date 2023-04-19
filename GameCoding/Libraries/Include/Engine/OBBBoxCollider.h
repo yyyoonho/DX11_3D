@@ -13,6 +13,7 @@ public:
 
 	BoundingOrientedBox& GetBoundingBox() { return _boundingBox; }
 
-private:
+private:	
 	BoundingOrientedBox _boundingBox;
 };
+

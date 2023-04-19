@@ -2,34 +2,34 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Game">
-      <UniqueIdentifier>{a050ea6c-8792-45ab-967d-88e7d247b79a}</UniqueIdentifier>
+      <UniqueIdentifier>{d2d0fd71-4d67-48c2-b343-6fdb5782e40f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Main">
-      <UniqueIdentifier>{aa11791a-9bc6-4e6a-a46b-1f509d1919da}</UniqueIdentifier>
+      <UniqueIdentifier>{7efaf247-0110-432a-9d3a-fb863c368ac6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Shaders">
-      <UniqueIdentifier>{02539ea9-f767-4074-b1a6-e5de995b06ad}</UniqueIdentifier>
+      <UniqueIdentifier>{ec1fc7a4-e083-4ffe-aa6f-9f1c2c16b5c4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Main\Camera">
-      <UniqueIdentifier>{59583bfb-afc5-49c1-bea5-7bdf96ee715c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shaders\Week2">
-      <UniqueIdentifier>{85d4b296-3eae-4a92-b736-fc5d15acf693}</UniqueIdentifier>
+      <UniqueIdentifier>{31df8a51-3da7-4280-a9ab-313dd1942a27}</UniqueIdentifier>
     </Filter>
     <Filter Include="Shaders\Week1">
-      <UniqueIdentifier>{e03178c7-949d-435a-bdea-46018ee5f433}</UniqueIdentifier>
+      <UniqueIdentifier>{44f4b79a-3579-42dd-8424-868229cbadd8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Shaders\Common">
-      <UniqueIdentifier>{f5d21fa0-b835-45c8-a99f-5463077126c4}</UniqueIdentifier>
+      <UniqueIdentifier>{88296819-9c84-4939-8e24-8102ffbf384e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Week2">
+      <UniqueIdentifier>{9c264924-84d8-48b0-8644-af2500675951}</UniqueIdentifier>
     </Filter>
     <Filter Include="Shaders\Week3">
-      <UniqueIdentifier>{42737e2b-777f-4097-9214-1dfa9db8ae09}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Week3">
-      <UniqueIdentifier>{897349ee-2028-488b-a19a-7d9e5f6b7fe1}</UniqueIdentifier>
+      <UniqueIdentifier>{b975f86e-0bde-45b3-9f58-f0e7a4664809}</UniqueIdentifier>
     </Filter>
     <Filter Include="Shaders\Week4">
-      <UniqueIdentifier>{1032f287-b1bc-40e4-b356-f0dee61150c9}</UniqueIdentifier>
+      <UniqueIdentifier>{d710bac0-106e-41c1-bec4-b6617dffa0b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Week3">
+      <UniqueIdentifier>{2fdb1f5a-3acc-42cd-9246-38c59b84284e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -42,26 +42,26 @@
     <ClCompile Include="CameraScript.cpp">
       <Filter>Main\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionDemo.cpp">
-      <Filter>Game\Week3</Filter>
-    </ClCompile>
-    <ClCompile Include="GroupDemo.cpp">
+    <ClCompile Include="SceneDemo.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="RawBufferDemo.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="SceneDemo.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="StructuredBufferDemo.cpp">
+    <ClCompile Include="GroupDemo.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="TextureBufferDemo.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="StructuredBufferDemo.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
     <ClCompile Include="ViewportDemo.cpp">
       <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionDemo.cpp">
+      <Filter>Game\Week3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -74,26 +74,26 @@
     <ClInclude Include="CameraScript.h">
       <Filter>Main\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionDemo.h">
-      <Filter>Game\Week3</Filter>
-    </ClInclude>
-    <ClInclude Include="GroupDemo.h">
+    <ClInclude Include="SceneDemo.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="RawBufferDemo.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="SceneDemo.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="StructuredBufferDemo.h">
+    <ClInclude Include="GroupDemo.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="TextureBufferDemo.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="StructuredBufferDemo.h">
+      <Filter>Game</Filter>
+    </ClInclude>
     <ClInclude Include="ViewportDemo.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionDemo.h">
+      <Filter>Game\Week3</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

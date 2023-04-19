@@ -24,3 +24,4 @@ private:
 	uint8				_pass = 0;
 	shared_ptr<Model>	_model;
 };
+

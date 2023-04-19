@@ -16,7 +16,7 @@ Shader::Shader(wstring file) : _file(L"..\\Shaders\\" + file)
 
 Shader::~Shader()
 {
-
+	
 }
 
 void Shader::CreateEffect()
@@ -297,15 +297,15 @@ ShaderDesc ShaderManager::GetEffect(wstring fileName)
 		ComPtr<ID3DX11Effect> effect;
 		hr = ::D3DX11CreateEffectFromMemory(blob->GetBufferPointer(), blob->GetBufferSize(), 0, DEVICE.Get(), effect.GetAddressOf());
 		CHECK(hr);
-
-		shaders[fileName] = ShaderDesc{ blob, effect };
+		
+		shaders[fileName] = ShaderDesc{blob, effect};
 	}
-
+	
 	ShaderDesc desc = shaders.at(fileName);
 	ComPtr<ID3DX11Effect> effect;
 	desc.effect->CloneEffect(D3DX11_EFFECT_CLONE_FORCE_NONSINGLE, effect.GetAddressOf());
 
-	return ShaderDesc{ desc.blob, effect };
+	return ShaderDesc{desc.blob, effect};
 }
 
 void Shader::PushGlobalData(const Matrix& view, const Matrix& projection)
@@ -316,7 +316,7 @@ void Shader::PushGlobalData(const Matrix& view, const Matrix& projection)
 		_globalBuffer->Create();
 		_globalEffectBuffer = GetConstantBuffer("GlobalBuffer");
 	}
-
+	
 	_globalDesc.V = view;
 	_globalDesc.P = projection;
 	_globalDesc.VP = view * projection;

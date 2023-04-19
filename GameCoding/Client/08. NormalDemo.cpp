@@ -13,7 +13,6 @@ void NormalDemo::Init()
 	_geometry = make_shared<Geometry<VertexTextureNormalData>>();
 	//GeometryHelper::CreateCube(_geometry);
 	GeometryHelper::CreateSphere(_geometry);
-
 	_vertexBuffer = make_shared<VertexBuffer>();
 	_vertexBuffer->Create(_geometry->GetVertices());
 	_indexBuffer = make_shared<IndexBuffer>();
