@@ -109,7 +109,11 @@ struct Triangle3D
 	};
 };
 
-
+struct Interval3D
+{
+	float min;
+	float max;
+};
 
 
 
