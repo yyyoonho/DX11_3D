@@ -35,7 +35,6 @@ struct MathUtils
 	// ------------------
 	// Intersection
 	// ------------------
-
 	static bool SphereSphere(const Sphere3D& s1, const Sphere3D& s2);
 	static bool SphereAABB(const Sphere3D& sphere, const AABB3D& aabb);
 	static bool SphereOBB(const Sphere3D& sphere, const OBB3D& obb);
@@ -52,6 +51,23 @@ struct MathUtils
 	static bool AABBPlane(const AABB3D& aabb, const Plane3D& plane);
 	static bool OBBOBB(const OBB3D& obb1, const OBB3D& obb2);
 	static bool PlanePlane(const Plane3D& plane1, const Plane3D& plane2);
+
+
+	// ------------------
+	// Raycast
+	// ------------------
+	static bool Raycast(const Sphere3D& sphere, const Ray3D& ray, OUT float& distance);
+	static bool Raycast(const AABB3D& aabb, const Ray3D& ray, OUT float& distance);
+	static bool Raycast(const Plane3D& plane, const Ray3D& ray, OUT float& distance);
+
+	static bool PointInTriangle(const Point3D& p, const Triangle3D& t);
+
+	static Plane3D FromTriangle(const Triangle3D& t);
+	static Vec3 Barycentric(const Point3D& p, const Triangle3D& t);
+	static bool Raycast(const Triangle3D& triangle, const Ray3D& ray, float& distance);
+	static Vec3 ProjectVecOnVec(Vec3 from, Vec3 to);
+
+
 
 };
 
