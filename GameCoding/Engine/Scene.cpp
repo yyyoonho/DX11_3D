@@ -4,6 +4,7 @@
 #include "BaseCollider.h"
 #include "Camera.h"
 #include "Terrain.h"
+#include "Button.h"
 
 void Scene::Start()
 {
@@ -23,6 +24,8 @@ void Scene::Update()
 	{
 		object->Update();
 	}
+
+	PickUI();
 }
 
 void Scene::LateUpdate()
@@ -92,14 +95,36 @@ std::shared_ptr<GameObject> Scene::GetUICamera()
 	return nullptr;
 }
 
+void Scene::PickUI()
+{
+	if (INPUT->GetButtonDown(KEY_TYPE::LBUTTON) == false)
+		return;
+
+	if (GetUICamera() == nullptr)
+		return;
+
+	POINT screenPt = INPUT->GetMousePos();
+
+	shared_ptr<Camera> camera = GetUICamera()->GetCamera();
+
+	const auto gameObjects = GetObjects();
+
+	for (auto& gameObject : gameObjects)
+	{
+		if (gameObject->GetButton() == nullptr)
+			continue;
+
+		if (gameObject->GetButton()->Picked(screenPt))
+			gameObject->GetButton()->InvokeOnClicked();
+	}
+}
+
 std::shared_ptr<class GameObject> Scene::Pick(int32 screenX, int32 screenY)
 {
 	shared_ptr<Camera> camera = GetMainCamera()->GetCamera();
 
 	float width = GRAPHICS->GetViewport().GetWidth();
 	float height = GRAPHICS->GetViewport().GetHeight();
-	//float width = static_cast<float>(GAME->GetGameDesc().width);
-	//float height = static_cast<float>(GAME->GetGameDesc().height);
 
 	Matrix projectionMatrix = camera->GetProjectionMatrix();
 
@@ -116,6 +141,9 @@ std::shared_ptr<class GameObject> Scene::Pick(int32 screenX, int32 screenY)
 
 	for (auto& gameObject : gameObjects)
 	{
+		if (camera->IsCulled(gameObject->GetLayerIndex()))
+			continue;
+
 		if (gameObject->GetCollider() == nullptr)
 			continue;
 
