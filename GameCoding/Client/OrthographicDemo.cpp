@@ -1,9 +1,8 @@
 #include "pch.h"
-#include "CollisionDemo.h"
 #include "RawBuffer.h"
 #include "TextureBuffer.h"
 #include "Material.h"
-#include "SceneDemo.h"
+#include "OrthographicDemo.h"
 #include "GeometryHelper.h"
 #include "Camera.h"
 #include "GameObject.h"
@@ -25,8 +24,9 @@
 #include "AABBBoxCollider.h"
 #include "OBBBoxCollider.h"
 #include "Terrain.h"
+#include "Camera.h"
 
-void CollisionDemo::Init()
+void OrthographicDemo::Init()
 {
 	_shader = make_shared<Shader>(L"23. RenderDemo.fx");
 
@@ -36,6 +36,22 @@ void CollisionDemo::Init()
 		camera->GetOrAddTransform()->SetPosition(Vec3{ 0.f, 0.f, -5.f });
 		camera->AddComponent(make_shared<Camera>());
 		camera->AddComponent(make_shared<CameraScript>());
+		camera->GetCamera()->SetCullingMaskLayerOnOff(Layer_UI, true);
+		CUR_SCENE->Add(camera);
+	}
+
+	// UI_Camera
+	{
+		auto camera = make_shared<GameObject>();
+		camera->GetOrAddTransform()->SetPosition(Vec3{ 0.f, 0.f, -5.f });
+		camera->AddComponent(make_shared<Camera>());
+		camera->GetCamera()->SetProjectionType(ProjectionType::Orthographic);
+		camera->GetCamera()->SetNear(1.f);
+		camera->GetCamera()->SetFar(100.f);
+		//camera->AddComponent(make_shared<CameraScript>());
+
+		camera->GetCamera()->SetCullingMaskAll();
+		camera->GetCamera()->SetCullingMaskLayerOnOff(Layer_UI, false);
 		CUR_SCENE->Add(camera);
 	}
 
@@ -65,73 +81,31 @@ void CollisionDemo::Init()
 		RESOURCES->Add(L"Veigar", material);
 	}
 
-	// Terrain
+	// Mesh
 	{
 		auto obj = make_shared<GameObject>();
-		obj->AddComponent(make_shared<Terrain>());
-		obj->GetTerrain()->Create(10, 10, RESOURCES->Get<Material>(L"Veigar"));
+		obj->GetOrAddTransform()->SetLocalPosition(Vec3(0.f, 200.f, 0.f));
+		obj->GetOrAddTransform()->SetScale(Vec3(200.f));
+		obj->AddComponent(make_shared<MeshRenderer>());
+
+		obj->SetLayerIndex(Layer_UI);
+		{
+			obj->GetMeshRenderer()->SetMaterial(RESOURCES->Get<Material>(L"Veigar"));
+		}
+		{
+			auto mesh = RESOURCES->Get<Mesh>(L"Quad");
+			obj->GetMeshRenderer()->SetMesh(mesh);
+			obj->GetMeshRenderer()->SetPass(0);
+		}
 
 		CUR_SCENE->Add(obj);
 	}
-	//{
-	//	auto obj = make_shared<GameObject>();
-	//	obj->GetOrAddTransform()->SetLocalPosition(Vec3(0.f));
-	//	obj->AddComponent(make_shared<MeshRenderer>());
-	//	{
-	//		auto mesh = make_shared<Mesh>();
-	//		mesh->CreateGrid(10, 10);
-	//		obj->GetMeshRenderer()->SetMesh(mesh);
-	//		obj->GetMeshRenderer()->SetPass(0);
-	//	}
-	//	{
-	//		obj->GetMeshRenderer()->SetMaterial(RESOURCES->Get<Material>(L"Veigar"));
-	//	}
-	//	CUR_SCENE->Add(obj);
-	//}
 
 	// Mesh
 	{
 		auto obj = make_shared<GameObject>();
 		obj->GetOrAddTransform()->SetLocalPosition(Vec3(0.f));
-		obj->AddComponent(make_shared<MeshRenderer>());
-		{
-			obj->GetMeshRenderer()->SetMaterial(RESOURCES->Get<Material>(L"Veigar"));
-		}
-		/*{
-			auto mesh = RESOURCES->Get<Mesh>(L"Sphere");
-			obj->GetMeshRenderer()->SetMesh(mesh);
-			obj->GetMeshRenderer()->SetPass(0);
-		}*/
-		/*{
-			auto collider = make_shared<SphereCollider>();
-			collider->SetRadius(0.5f);
-			obj->AddComponent(collider);
-		}*/
-		{
-			auto mesh = RESOURCES->Get<Mesh>(L"Cube");
-			obj->GetMeshRenderer()->SetMesh(mesh);
-			obj->GetMeshRenderer()->SetPass(0);
-		}
-		{
-			auto collider = make_shared<AABBBoxCollider>();
-			collider->GetBoundingBox().Extents = Vec3(0.5f);
-			obj->AddComponent(collider);
-		}
-		/*{
-			obj->GetOrAddTransform()->SetRotation(Vec3(0, 45, 0));
-
-			auto collider = make_shared<OBBBoxCollider>();
-			collider->GetBoundingBox().Extents = Vec3(0.5f);
-			collider->GetBoundingBox().Orientation = Quaternion::CreateFromYawPitchRoll(45, 0, 0);
-			obj->AddComponent(collider);
-		}*/
-
-		CUR_SCENE->Add(obj);
-	}
-
-	{
-		auto obj = make_shared<GameObject>();
-		obj->GetOrAddTransform()->SetLocalPosition(Vec3(3.f, 0.f, 0.f));
+		obj->GetOrAddTransform()->SetScale(Vec3(2.f));
 		obj->AddComponent(make_shared<MeshRenderer>());
 		{
 			obj->GetMeshRenderer()->SetMaterial(RESOURCES->Get<Material>(L"Veigar"));
@@ -141,43 +115,17 @@ void CollisionDemo::Init()
 			obj->GetMeshRenderer()->SetMesh(mesh);
 			obj->GetMeshRenderer()->SetPass(0);
 		}
-		{
-			auto collider = make_shared<SphereCollider>();
-			collider->SetRadius(0.5f);
-			obj->AddComponent(collider);
-		}
-		{
-			obj->AddComponent(make_shared<MoveScript>());
-		}
 
 		CUR_SCENE->Add(obj);
 	}
 }
 
-void CollisionDemo::Update()
-{
-	if (INPUT->GetButtonDown(KEY_TYPE::LBUTTON))
-	{
-		int32 mouseX = INPUT->GetMousePos().x;
-		int32 mouseY = INPUT->GetMousePos().y;
-
-		// Picking
-		auto pickObj = CUR_SCENE->Pick(mouseX, mouseY);
-		if (pickObj)
-		{
-			CUR_SCENE->Remove(pickObj);
-		}
-	}
-}
-
-void CollisionDemo::Render()
+void OrthographicDemo::Update()
 {
 
 }
 
-void MoveScript::Update()
+void OrthographicDemo::Render()
 {
-	auto pos = GetTransform()->GetPosition();
-	pos.x -= DT * 1.0f;
-	GetTransform()->SetPosition(pos);
+
 }

@@ -23,11 +23,6 @@ void Scene::Update()
 	{
 		object->Update();
 	}
-
-	// INSTANCING
-	vector<shared_ptr<GameObject>> temp;
-	temp.insert(temp.end(), objects.begin(), objects.end());
-	INSTANCING->Render(temp);
 }
 
 void Scene::LateUpdate()
@@ -40,6 +35,15 @@ void Scene::LateUpdate()
 	}
 
 	CheckCollision();
+}
+
+void Scene::Render()
+{
+	for (auto& camera : _cameras)
+	{
+		camera->GetCamera()->SortGameObject();
+		camera->GetCamera()->Render_Forward();
+	}
 }
 
 void Scene::Add(shared_ptr<GameObject> object)
@@ -66,9 +70,31 @@ void Scene::Remove(shared_ptr<GameObject> object)
 	_lights.erase(object);
 }
 
+std::shared_ptr<GameObject> Scene::GetMainCamera()
+{
+	for (auto& camera : _cameras)
+	{
+		if (camera->GetCamera()->GetProjectionType() == ProjectionType::Perspective)
+			return camera;
+	}
+
+	return nullptr;
+}
+
+std::shared_ptr<GameObject> Scene::GetUICamera()
+{
+	for (auto& camera : _cameras)
+	{
+		if (camera->GetCamera()->GetProjectionType() == ProjectionType::Orthographic)
+			return camera;
+	}
+
+	return nullptr;
+}
+
 std::shared_ptr<class GameObject> Scene::Pick(int32 screenX, int32 screenY)
 {
-	shared_ptr<Camera> camera = GetCamera()->GetCamera();
+	shared_ptr<Camera> camera = GetMainCamera()->GetCamera();
 
 	float width = GRAPHICS->GetViewport().GetWidth();
 	float height = GRAPHICS->GetViewport().GetHeight();

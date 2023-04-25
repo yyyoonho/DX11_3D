@@ -8,7 +8,6 @@ using Point3D = Vec3;
 // *************
 // Line3D
 // *************
-
 struct Line3D
 {
 	Point3D start = Point3D(0.f);
@@ -21,7 +20,6 @@ struct Line3D
 // *************
 // Ray3D
 // *************
-
 struct Ray3D
 {
 	Point3D origin = Point3D(0.f);
@@ -29,13 +27,12 @@ struct Ray3D
 
 	void NormalizeDirection() { direction.Normalize(); }
 
-	static Ray3D FromPoints(const Point3D& from, const Point3D& to) { return Ray3D{from, to - from}; }
+	static Ray3D FromPoints(const Point3D& from, const Point3D& to) { return Ray3D{ from, to - from }; }
 };
 
 // *************
 // Sphere3D
 // *************
-
 struct Sphere3D
 {
 	Point3D position;
@@ -45,7 +42,6 @@ struct Sphere3D
 // *************
 // AABB
 // *************
-
 struct AABB3D
 {
 	Point3D position = Vec3(0.f);
@@ -67,45 +63,42 @@ struct AABB3D
 
 	static AABB3D FromMinMax(const Vec3& min, const Vec3& max)
 	{
-		return AABB3D((min + max) /2, (max - min) / 2);
+		return AABB3D((min + max) / 2, (max - min) / 2);
 	}
 };
 
-// *****************
+// *************
 // OBB
-// *****************
-
+// *************
 struct OBB3D
 {
 	Point3D position;
 	Vec3 size;
 	Matrix orientation;
-	// Vec4 quaternion;
-	// Vec3 rotation;
+	//Vec4 quaternion;
+	//Vec3 rotation;
 };
 
-// *****************
-// Plane3D
-// *****************
-
-// 삼각형 (정점3개)
-// 노멀 + 정점 1개
-// 노멀 + 거리
+// *************
+// PLANE3D
+// 1) 평면의 점 세개를 안다. (정점3개)
+// 2) 평면의 normal vector와 평면의 점 하나를 안다. (노멀+정점1개)
+// 3) 평면의 normal vector와 원점에서 평면까지의 distance를 안다. (노멀+거리)
+// *************
 struct Plane3D
 {
 	Vec3 normal;
 	float distance;
 };
 
-// *****************
-// Triangle3D
-// *****************
-
+// *************
+// Trinagle3D
+// *************
 struct Triangle3D
 {
 	union
 	{
-		struct  
+		struct
 		{
 			Point3D a;
 			Point3D b;
@@ -121,3 +114,8 @@ struct Interval3D
 	float min;
 	float max;
 };
+
+
+
+
+
