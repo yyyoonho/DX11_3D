@@ -252,6 +252,7 @@
     <ClInclude Include="Button.h">
       <Filter>06. UI &amp; Effect</Filter>
     </ClInclude>
+    <ClInclude Include="BillBoard.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -440,6 +441,7 @@
     <ClCompile Include="Button.cpp">
       <Filter>06. UI &amp; Effect</Filter>
     </ClCompile>
+    <ClCompile Include="BillBoard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleMath.inl">
