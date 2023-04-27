@@ -54,6 +54,9 @@
     <ClCompile Include="BillBoardDemo.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="SnowDemo.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -72,6 +75,9 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="BillBoardDemo.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SnowDemo.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
@@ -167,6 +173,9 @@
       <Filter>Shaders\Week4</Filter>
     </FxCompile>
     <FxCompile Include="..\Shaders\28. BillBoardDemo.fx">
+      <Filter>Shaders\Week5</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Shaders\29. SnowDemo.fx">
       <Filter>Shaders\Week5</Filter>
     </FxCompile>
   </ItemGroup>

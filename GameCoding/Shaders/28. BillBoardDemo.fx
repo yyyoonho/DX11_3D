@@ -7,6 +7,7 @@ struct VertexInput
     float4 position : POSITION;
     float2 uv : TEXCOORD;
     float2 scale : SCALE;
+    
 };
 
 struct V_OUT

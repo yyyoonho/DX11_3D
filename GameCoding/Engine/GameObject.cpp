@@ -11,6 +11,7 @@
 #include "Terrain.h"
 #include "Button.h"
 #include "BillBoard.h"
+#include "SnowBillBoard.h"
 
 GameObject::GameObject()
 {
@@ -157,6 +158,12 @@ shared_ptr<BillBoard> GameObject::GetBillBoard()
 {
 	shared_ptr<Component> component = GetFixedComponent(ComponentType::BillBoard);
 	return static_pointer_cast<BillBoard>(component);
+}
+
+shared_ptr<SnowBillboard> GameObject::GetSnowBillboard()
+{
+	shared_ptr<Component> component = GetFixedComponent(ComponentType::SnowBillBoard);
+	return static_pointer_cast<SnowBillboard>(component);
 }
 
 std::shared_ptr<Transform> GameObject::GetOrAddTransform()
